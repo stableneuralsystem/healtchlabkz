@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HEALTCH LAB KZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- GLOBAL & GLASSMORPHISM --- */
+        :root {
+            --primary-grad: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+            --glass-blur: blur(16px);
+            --text-main: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f1115 0%, #131426 50%, #1e1b4b 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .glass-card:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes heartbeat { 0% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } 60% { transform: scale(1); } }
+        @keyframes scanline { 0% { top: 0%; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        .animate-heartbeat { animation: heartbeat 1.5s infinite; }
+        .animate-scan { animation: scanline 2s linear infinite; }
+        .animate-spin-slow { animation: spin-slow 3s linear infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+        /* Inputs & Buttons */
+        .glass-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            width: 100%;
+            outline: none;
+        }
+        .glass-input:focus { border-color: #8b5cf6; }
+
+        .btn-primary {
+            background: var(--primary-grad);
+            color: white;
+            font-weight: 600;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        .btn-primary:active { transform: scale(0.97); }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: rgba(16, 185, 129, 0.9);
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            backdrop-filter: blur(4px);
+        }
+        #toast.show { visibility: visible; animation: fadeIn 0.5s, fadeOut 0.5s 2.5s; }
+        @keyframes fadeOut { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        /* Switch Toggle */
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4b5563; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #22c55e; }
+        input:checked + .slider:before { transform: translateX(18px); }
+        
+        /* Utility for Text Area in Diary */
+        .diary-textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: white;
+            resize: none;
+            outline: none;
+            font-size: 14px;
+            min-height: 60px;
+        }
+        
+        /* ElevenLabs Widget Styling Container */
+        elevenlabs-convai {
+            width: 100%;
+            display: block;
+            min-height: 150px; /* Force minimum height */
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-100">
+
+    <div id="toast"></div>
+
+    <div id="app" class="max-w-md mx-auto min-h-screen relative pb-24 shadow-2xl overflow-hidden">
+        
+        <section id="screen-welcome" class="flex flex-col justify-center min-h-screen p-6 animate-fade-in relative z-10">
+            <div class="mb-10 text-center">
+                <h1 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 mb-2">
+                    HEALTCH <br> LAB KZ
+                </h1>
+                <p class="text-gray-400 text-sm">Ваше здоровье — наш приоритет</p>
+            </div>
+            <div class="space-y-4">
+                <input type="email" id="login-email" class="glass-input" placeholder="Email" value="admin@gmail.com">
+                <input type="password" id="login-pass" class="glass-input" placeholder="Пароль" value="admin123">
+                <button onclick="handleLogin()" class="btn-primary mt-4">Войти</button>
+                <button onclick="alert('Регистрация временно закрыта')" class="w-full text-center text-sm text-gray-400 mt-4">Нет аккаунта? Зарегистрируйтесь</button>
+            </div>
+        </section>
+
+        <section id="screen-dashboard" class="hidden animate-fade-in p-5 pt-8 pb-32">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <p class="text-sm text-gray-400">Добро пожаловать,</p>
+                    <h2 class="text-xl font-bold">Admin</h2>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-lg">A</div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+                
+                <div onclick="navigateTo('screen-health')" class="glass-card relative overflow-hidden group border-l-4 border-l-green-400 cursor-pointer">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 rounded-full bg-red-500/20 text-red-400 animate-pulse">
+                                <i data-lucide="heart" class="w-6 h-6 fill-current"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">Здоровье</h3>
+                                <p class="text-xs text-green-400">Пульс: <span id="dash-bpm">58</span> уд/мин</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 flex items-center gap-2">
+                         <div class="h-1 flex-1 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-green-500 w-[75%]"></div>
+                         </div>
+                         <span class="text-xs text-gray-300">В норме</span>
+                    </div>
+                </div>
+
+                <div onclick="navigateTo('screen-diary')" class="glass-card flex items-center gap-4 cursor-pointer border-l-4 border-l-indigo-400">
+                    <div class="p-3 rounded-full bg-indigo-500/20 text-indigo-300">
+                        <i data-lucide="book-open" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold">Мой дневник</h3>
+                        <p class="text-xs text-gray-400">Записи наблюдений</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="text-gray-500 w-5 h-5"></i>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div onclick="navigateTo('screen-analyses')" class="glass-card flex flex-col justify-between h-32 cursor-pointer">
+                        <div class="p-2 rounded-full bg-blue-500/20 text-blue-400 w-fit mb-2"><i data-lucide="flask-conical" class="w-6 h-6"></i></div>
+                        <div><h3 class="font-semibold text-sm">Мои анализы</h3><p class="text-[10px] text-gray-400">Спектр и AI</p></div>
+                    </div>
+
+                    <div onclick="navigateTo('screen-upcoming')" class="glass-card flex flex-col justify-between h-32 cursor-pointer">
+                        <div class="p-2 rounded-full bg-orange-500/20 text-orange-400 w-fit mb-2"><i data-lucide="calendar-clock" class="w-6 h-6"></i></div>
+                        <div><h3 class="font-semibold text-sm">Предстоящие анализы</h3><p class="text-[10px] text-gray-400">3 записи</p></div>
+                    </div>
+
+                    <div onclick="navigateTo('screen-doctor')" class="glass-card flex flex-col justify-between h-32 cursor-pointer">
+                        <div class="p-2 rounded-full bg-pink-500/20 text-pink-400 w-fit mb-2"><i data-lucide="stethoscope" class="w-6 h-6"></i></div>
+                        <div><h3 class="font-semibold text-sm">Мой врач</h3><p class="text-[10px] text-gray-400">Осипов Е.М.</p></div>
+                    </div>
+
+                    <div onclick="navigateTo('screen-workouts')" class="glass-card flex flex-col justify-between h-32 cursor-pointer">
+                        <div class="p-2 rounded-full bg-teal-500/20 text-teal-400 w-fit mb-2"><i data-lucide="dumbbell" class="w-6 h-6"></i></div>
+                        <div><h3 class="font-semibold text-sm">Тренировки</h3><p class="text-[10px] text-gray-400">Программы</p></div>
+                    </div>
+
+                     <div onclick="navigateTo('screen-laboratories')" class="glass-card flex flex-col justify-between h-32 cursor-pointer">
+                        <div class="p-2 rounded-full bg-emerald-500/20 text-emerald-400 w-fit mb-2"><i data-lucide="building-2" class="w-6 h-6"></i></div>
+                        <div><h3 class="font-semibold text-sm">Лаборатория</h3><p class="text-[10px] text-gray-400">Запись</p></div>
+                    </div>
+
+                     <div onclick="navigateTo('screen-complaints')" class="glass-card flex flex-col justify-between h-32 cursor-pointer border border-red-500/30">
+                        <div class="p-2 rounded-full bg-red-500/20 text-red-400 w-fit mb-2"><i data-lucide="message-square-warning" class="w-6 h-6"></i></div>
+                        <div><h3 class="font-semibold text-sm">Жалобы</h3><p class="text-[10px] text-gray-400">AI Чат</p></div>
+                    </div>
+                </div>
+
+                <div onclick="navigateTo('screen-voice-analysis')" class="glass-card flex items-center gap-4 cursor-pointer border-l-4 border-l-pink-500 bg-pink-500/5 hover:bg-pink-500/10 transition mt-2">
+                    <div class="p-3 rounded-full bg-pink-500/20 text-pink-400 animate-pulse">
+                        <i data-lucide="mic" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg">Анализ здоровья</h3>
+                        <p class="text-xs text-gray-400">Голосовой помощник (ElevenLabs)</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="text-gray-500 w-5 h-5"></i>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="screen-health" class="hidden min-h-screen pb-20">
+            <div class="sticky top-0 z-20 glass-panel p-4 flex items-center gap-3">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg">Показатели</h2>
+            </div>
+
+            <div class="p-5 space-y-4">
+                <div class="glass-card p-0 overflow-hidden bg-[#1e202e]">
+                    <div class="p-5 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                             <span class="text-xs text-gray-400">Часы подключены</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center pb-6">
+                         <div class="relative flex items-center justify-center w-32 h-32 bg-gradient-to-br from-red-500 to-pink-600 rounded-full shadow-[0_0_30px_rgba(239,68,68,0.4)] animate-heartbeat">
+                             <i data-lucide="heart" class="w-16 h-16 text-white fill-white"></i>
+                         </div>
+                         <div class="mt-4 text-center">
+                             <span id="health-bpm" class="text-5xl font-bold">58</span>
+                             <p class="text-sm text-gray-400">уд/мин</p>
+                         </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white">
+                            <i data-lucide="footprints" class="w-6 h-6"></i>
+                        </div>
+                        <div class="text-right">
+                             <p class="text-xs text-gray-400">Мои шаги</p>
+                             <h3 class="text-2xl font-bold">5,600</h3>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-lg flex gap-3 items-start">
+                        <i data-lucide="triangle-alert" class="w-5 h-5 text-yellow-500 shrink-0 mt-0.5"></i>
+                        <p class="text-xs text-yellow-200 leading-tight">Вам необходимо увеличить ваши шаги. В течение недели вы ходили меньше 5000. Мы рекомендуем 8000 шагов в день.</p>
+                    </div>
+                     <button class="w-full mt-3 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-sm font-bold shadow-lg">Включить в план тренировок</button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="glass-card p-4">
+                        <div class="flex items-center gap-2 mb-2 text-green-400"><i data-lucide="activity" class="w-4 h-4"></i> <span class="text-xs">Качество сна</span></div>
+                        <h3 class="text-xl font-bold">7.5 ч</h3>
+                    </div>
+                     <div class="glass-card p-4">
+                        <div class="flex items-center gap-2 mb-2 text-yellow-400"><i data-lucide="droplet" class="w-4 h-4"></i> <span class="text-xs">Вода</span></div>
+                        <h3 class="text-xl font-bold">1.8 л</h3>
+                    </div>
+                     <div class="glass-card p-4">
+                        <div class="flex items-center gap-2 mb-2 text-teal-400"><i data-lucide="thermometer" class="w-4 h-4"></i> <span class="text-xs">Температура</span></div>
+                        <h3 class="text-xl font-bold">36.6°C</h3>
+                    </div>
+                     <div class="glass-card p-4">
+                        <div class="flex items-center gap-2 mb-2 text-blue-400"><i data-lucide="zap" class="w-4 h-4"></i> <span class="text-xs">Энергия</span></div>
+                        <h3 class="text-xl font-bold">78%</h3>
+                    </div>
+                </div>
+
+                <div class="glass-card p-5">
+                    <h3 class="font-bold mb-3">Общий показатель здоровья</h3>
+                    <div class="h-4 bg-gray-700 rounded-full overflow-hidden mb-2">
+                        <div class="h-full bg-gradient-to-r from-green-400 to-emerald-500 w-[70%]"></div>
+                    </div>
+                    <p class="text-xs text-gray-400 text-center">На данном этапе согласно показателям ваше здоровье <span class="text-green-400 font-bold">удовлетворительное</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-diary" class="hidden min-h-screen pb-20">
+            <div class="sticky top-0 z-20 glass-panel p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                    <h2 class="font-bold text-lg">Мой дневник</h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] text-gray-400 w-16 text-right leading-tight">Показывать<br>врачу</span>
+                    <label class="switch">
+                        <input type="checkbox" checked id="diary-toggle" onchange="toggleDiaryPrivacy()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="p-4 space-y-4" id="diary-container">
+                </div>
+
+            <button onclick="addNewDiaryEntry()" class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition z-30">
+                <i data-lucide="plus" class="w-8 h-8 text-white"></i>
+            </button>
+        </section>
+
+        <section id="screen-analyses" class="hidden min-h-screen pb-20">
+            <div class="sticky top-0 z-20 glass-panel p-4 flex items-center gap-3">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg">Биомаркеры</h2>
+            </div>
+            <div class="p-4">
+                <p class="text-xs text-gray-400 mb-4 uppercase font-bold tracking-wider">Категории</p>
+                <div class="grid grid-cols-2 gap-3" id="categories-grid">
+                    </div>
+            </div>
+        </section>
+
+        <section id="screen-category-view" class="hidden min-h-screen pb-20">
+             <div class="sticky top-0 z-20 glass-panel p-4 flex items-center gap-3">
+                <button onclick="navigateTo('screen-analyses')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg w-full truncate" id="category-title">...</h2>
+            </div>
+            <div class="p-4 space-y-3" id="category-tests-list">
+                </div>
+        </section>
+
+        <section id="screen-analysis-detail" class="hidden min-h-screen pb-20">
+            <div class="sticky top-0 z-20 glass-panel p-4 flex items-center gap-3">
+                <button onclick="backToCategory()" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg w-full truncate" id="detail-title">Детали</h2>
+            </div>
+            <div class="p-4">
+                <div id="detail-content" class="space-y-6 mb-6"></div>
+                
+                <div class="glass-card border border-blue-500/30">
+                    <h4 class="font-bold text-sm mb-2 text-blue-300 flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> Gemini AI
+                    </h4>
+                    <p class="text-[10px] text-gray-400 mb-2">Задайте вопрос по этому анализу. Контекст уже загружен.</p>
+                    <div id="analysis-chat-output" class="text-xs text-gray-300 mb-3 max-h-48 overflow-y-auto space-y-2 p-2 bg-black/20 rounded"></div>
+                    <div class="flex gap-2">
+                        <input type="text" id="analysis-chat-input" class="glass-input py-2 text-xs" placeholder="Например: Это опасно?">
+                        <button onclick="sendAnalysisQuestion()" class="p-2 bg-blue-600 rounded-lg"><i data-lucide="send" class="w-4 h-4 text-white"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-upcoming" class="hidden min-h-screen p-6">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg">Предстоящие анализы</h2>
+            </div>
+            
+            <div class="glass-card overflow-hidden transition-all duration-300" id="upcoming-card">
+                <div onclick="toggleUpcoming()" class="flex justify-between items-center cursor-pointer">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                             <span class="text-blue-400 font-bold">03 Фев 2026</span>
+                             <span class="text-[10px] bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded">Ожидание</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Липидограмма</h3>
+                        <p class="text-sm text-gray-400">Нажмите для деталей</p>
+                    </div>
+                    <i data-lucide="chevron-down" id="upcoming-arrow" class="w-5 h-5 transition-transform duration-300"></i>
+                </div>
+
+                <div id="upcoming-details" class="hidden mt-4 pt-4 border-t border-white/10 space-y-4">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold mb-1">Больница (Клиника)</p>
+                        <div class="flex items-center gap-2 p-2 bg-white/5 rounded-lg border border-white/10">
+                            <i data-lucide="building-2" class="text-blue-400 w-4 h-4"></i>
+                            <span class="text-sm font-semibold">CityLab Алматы (Достык 45)</span>
+                            <span class="ml-auto text-xs text-green-400">Подтверждено</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold mb-2">Состав чекапа (5)</p>
+                        <ul class="text-sm space-y-2 pl-2">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> Общий холестерин</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> ЛПВП (Хороший)</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> ЛПНП (Плохой)</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> Триглицериды</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> Индекс атерогенности</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded-lg">
+                        <span class="text-sm text-gray-300">Время записи:</span>
+                        <span class="font-mono text-lg font-bold">09:30</span>
+                    </div>
+
+                    <button onclick="alert('Напоминание установлено за 1 день до визита!')" class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold transition">
+                        <i data-lucide="bell" class="w-4 h-4"></i> Напомнить мне за день
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-doctor" class="hidden min-h-screen p-6">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg">Мой лечащий врач</h2>
+            </div>
+            
+            <div class="glass-card mb-6 text-center pt-8 pb-8 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-blue-500/20 to-transparent"></div>
+                <div class="w-24 h-24 rounded-full bg-gray-700 mx-auto flex items-center justify-center border-2 border-blue-400 mb-4 shadow-xl text-3xl">👨‍⚕️</div>
+                <h2 class="text-2xl font-bold">Осипов Евгений Маратович</h2>
+                <p class="text-blue-300 text-sm mt-1">Терапевт высшей категории, MD</p>
+                <div class="mt-4 flex justify-center gap-2">
+                    <span class="bg-white/10 px-3 py-1 rounded-full text-xs">Стаж 22 года</span>
+                    <span class="bg-white/10 px-3 py-1 rounded-full text-xs">КМН</span>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="glass-card">
+                    <h3 class="font-bold mb-2 text-gray-300">О враче</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Специализируется на кардиологии и внутренней медицине. Автор 18 научных публикаций. Руководитель отделения клинической диагностики в НИИ здоровья (2014–2022). Сертифицирован в диагностике липидных нарушений и метаболического синдрома. Внимательный и эмпатичный специалист.
+                    </p>
+                </div>
+                <button onclick="navigateTo('screen-complaints')" class="btn-primary">Написать сообщение</button>
+            </div>
+        </section>
+
+        <section id="screen-workouts" class="hidden min-h-screen p-6 pb-20">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg">Тренировки</h2>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-sm uppercase text-gray-500 font-bold mb-3 tracking-wider">Моя программа</h3>
+                <div onclick="showWorkoutDetail('morning')" class="glass-card border-l-4 border-l-teal-400 flex justify-between items-center cursor-pointer">
+                    <div>
+                        <h4 class="font-bold text-lg">Утренний Тонус</h4>
+                        <p class="text-xs text-gray-400">Ежедневно • 15 мин • Легкая</p>
+                    </div>
+                    <button class="px-4 py-2 bg-teal-600/20 text-teal-300 rounded-lg text-sm font-semibold">Начать</button>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-sm uppercase text-gray-500 font-bold mb-3 tracking-wider">Категории</h3>
+                <div class="grid grid-cols-1 gap-3">
+                    <div onclick="showWorkoutDetail('cardio')" class="glass-card flex items-center gap-4 cursor-pointer hover:bg-white/5 transition">
+                        <div class="bg-orange-500/20 p-3 rounded-xl"><i data-lucide="activity" class="text-orange-400"></i></div>
+                        <div class="flex-1">
+                            <h4 class="font-bold">Кардио и Выносливость</h4>
+                            <p class="text-xs text-gray-400">Бег, скакалка, HIIT, Велотренажер</p>
+                        </div>
+                         <i data-lucide="chevron-right" class="text-gray-500 w-5 h-5"></i>
+                    </div>
+                    <div onclick="showWorkoutDetail('gym')" class="glass-card flex items-center gap-4 cursor-pointer hover:bg-white/5 transition">
+                        <div class="bg-blue-500/20 p-3 rounded-xl"><i data-lucide="dumbbell" class="text-blue-400"></i></div>
+                         <div class="flex-1">
+                            <h4 class="font-bold">Силовые в зале</h4>
+                            <p class="text-xs text-gray-400">Набор массы, рельеф, свободные веса</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="text-gray-500 w-5 h-5"></i>
+                    </div>
+                    <div onclick="showWorkoutDetail('yoga')" class="glass-card flex items-center gap-4 cursor-pointer hover:bg-white/5 transition">
+                        <div class="bg-purple-500/20 p-3 rounded-xl"><i data-lucide="flower-2" class="text-purple-400"></i></div>
+                         <div class="flex-1">
+                            <h4 class="font-bold">Йога и Растяжка</h4>
+                            <p class="text-xs text-gray-400">Гибкость, восстановление, дыхание</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="text-gray-500 w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-workout-detail" class="hidden min-h-screen p-6">
+             <div class="flex items-center gap-3 mb-6">
+                <button onclick="navigateTo('screen-workouts')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg" id="wo-detail-title">...</h2>
+            </div>
+            <div id="wo-detail-content" class="space-y-4"></div>
+        </section>
+
+        <section id="screen-laboratories" class="hidden min-h-screen p-6">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg">Лаборатория</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="glass-card">
+                    <h3 class="font-bold text-lg">CityLab Алматы</h3>
+                    <p class="text-sm text-gray-400 mb-2">пр. Достык, 45</p>
+                    <a href="tel:+77275550101" class="text-blue-400 text-sm block mb-3 font-mono">+7 (727) 555-01-01</a>
+                    <div class="flex gap-2">
+                        <button onclick="bookLab()" class="flex-1 py-3 border border-white/20 rounded-xl text-sm font-semibold hover:bg-white/10">Записаться</button>
+                        <a href="https://www.google.com/maps/search/?api=1&query=CityLab+Almaty" target="_blank" class="w-12 flex items-center justify-center border border-white/20 rounded-xl hover:bg-white/10 text-emerald-400">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3 class="font-bold text-lg">Invivo Астана</h3>
+                    <p class="text-sm text-gray-400 mb-2">ул. Кунаева, 12</p>
+                    <a href="tel:+77175550202" class="text-blue-400 text-sm block mb-3 font-mono">+7 (717) 555-02-02</a>
+                    <div class="flex gap-2">
+                        <button onclick="bookLab()" class="flex-1 py-3 border border-white/20 rounded-xl text-sm font-semibold hover:bg-white/10">Записаться</button>
+                         <a href="https://www.google.com/maps/search/?api=1&query=Invivo+Astana" target="_blank" class="w-12 flex items-center justify-center border border-white/20 rounded-xl hover:bg-white/10 text-emerald-400">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-complaints" class="hidden flex flex-col h-screen bg-[#0f1115]">
+            <div class="p-4 glass-panel flex items-center gap-3 z-10">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <div>
+                    <h2 class="font-bold">Чат с врачом (AI)</h2>
+                    <p class="text-xs text-green-400">Онлайн</p>
+                </div>
+            </div>
+            <div id="main-chat-history" class="flex-1 overflow-y-auto p-4 space-y-4">
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-xs font-bold">Bot</div>
+                    <div class="bg-gray-800 p-3 rounded-2xl rounded-tl-none max-w-[80%] text-sm">
+                        Здравствуйте! Опишите ваши симптомы, я постараюсь помочь и передам информацию врачу.
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 glass-panel pb-8">
+                <div class="flex gap-2 relative">
+                    <input type="text" id="main-chat-input" class="glass-input pr-10" placeholder="Сообщение...">
+                    <button onclick="sendGemini('main-chat-input', 'main-chat-history', 'Ты помощник врача. Отвечай эмпатично, спрашивай уточняющие вопросы.')" class="absolute right-1 top-1 bottom-1 bg-blue-600 w-10 rounded-lg flex items-center justify-center"><i data-lucide="send" class="w-4 h-4 text-white"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-voice-analysis" class="hidden min-h-screen flex flex-col relative overflow-y-auto pb-20">
+            <div class="p-4 glass-panel flex items-center gap-3 z-10 sticky top-0">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg">Голосовой анализ</h2>
+            </div>
+            
+            <div class="flex-1 flex flex-col items-start p-6 space-y-8 w-full">
+                
+                <div class="glass-card p-6 w-full max-w-sm flex flex-col items-start gap-4 border border-pink-500/20 text-left">
+                    <div class="w-20 h-20 bg-pink-500/20 rounded-full flex items-center justify-center animate-pulse">
+                        <i data-lucide="mic" class="w-10 h-10 text-pink-400"></i>
+                    </div>
+                    <div>
+                         <h3 class="font-bold text-xl mb-1">Говорите с AI</h3>
+                         <p class="text-sm text-gray-400">Голосовой ассистент находится справа или ниже. Нажмите на него для начала диалога.</p>
+                    </div>
+                </div>
+
+                <div class="w-full max-w-sm min-h-[350px] flex flex-col justify-start items-start rounded-2xl border-2 border-dashed border-white/10 bg-black/20 relative p-4">
+                     <p class="text-xs text-gray-500 mb-4 uppercase tracking-widest">Зона виджета (Слева)</p>
+                     
+                     <div class="w-full flex justify-start">
+                        <elevenlabs-convai agent-id="agent_8001kfgg5keje9qtyfrkd4853y1c"></elevenlabs-convai>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+    <script>
+        // --- INIT ---
+        lucide.createIcons();
+        const GEMINI_API_KEY = "AIzaSyCAgSeyibayMNQiWHLXm1aA1a_rcIOYSkQ";
+
+        // --- DIARY DATA ---
+        let diaryEntries = [
+            {
+                id: 1,
+                date: "20.01.2026, 09:30",
+                color: "red",
+                text: "Сильная головная боль в висках. После обследования были выписаны лекарства, принял, и все прошло через 20 минут.",
+                expanded: false
+            },
+            {
+                id: 2,
+                date: "15.01.2026, 18:45",
+                color: "yellow",
+                text: "Было учащение пульса до 120. Хорошо что заранее прошел рекомендованный лабораторный тест в Health Lab KZ — выявили дефицит магния. Врачи сказали, если бы вовремя не выявили, могли быть последствия. Сейчас все в норме.",
+                expanded: false
+            },
+            {
+                id: 3,
+                date: "10.01.2026, 22:00",
+                color: "blue",
+                text: "Чувствовал усталость после еды. Сделал замер глюкозы — норма. Врач через приложение посоветовал скорректировать ужин. Помогло.",
+                expanded: false
+            }
+        ];
+
+        // --- NAVIGATION ---
+        function navigateTo(screenId) {
+            document.querySelectorAll('section[id^="screen-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+            window.scrollTo(0,0);
+            
+            if(screenId === 'screen-health') startHeart();
+            else stopHeart();
+
+            if(screenId === 'screen-diary') renderDiary();
+            if(screenId === 'screen-analyses') renderCategories();
+        }
+
+        function handleLogin() { navigateTo('screen-dashboard'); }
+
+        // --- HEARTBEAT ---
+        let heartInt;
+        function startHeart() {
+            const el = document.getElementById('health-bpm');
+            const dash = document.getElementById('dash-bpm');
+            heartInt = setInterval(() => {
+                const val = Math.floor(Math.random() * (65 - 55 + 1) + 55);
+                if(el) el.innerText = val;
+                if(dash) dash.innerText = val;
+            }, 2000);
+        }
+        function stopHeart() { clearInterval(heartInt); }
+
+        // --- DIARY LOGIC ---
+        function renderDiary() {
+            const container = document.getElementById('diary-container');
+            container.innerHTML = '';
+            
+            diaryEntries.forEach((entry, index) => {
+                const div = document.createElement('div');
+                div.className = `glass-card border-l-2 border-l-${entry.color}-400 transition-all`;
+                
+                let iconColor = document.getElementById('diary-toggle').checked ? 'text-green-400' : 'text-gray-600';
+
+                if (!entry.expanded) {
+                    // Collapsed View
+                    div.innerHTML = `
+                        <div onclick="toggleEntry(${index})" class="cursor-pointer">
+                            <div class="flex justify-between text-xs text-gray-400 mb-2">
+                                <span>${entry.date}</span>
+                                <i data-lucide="eye" class="w-3 h-3 ${iconColor} diary-icon-status"></i>
+                            </div>
+                            <p class="text-sm line-clamp-2">${entry.text}</p>
+                        </div>
+                    `;
+                } else {
+                    // Expanded / Editable View
+                    div.innerHTML = `
+                         <div class="flex justify-between text-xs text-gray-400 mb-2">
+                            <span class="font-bold text-white">${entry.date}</span>
+                            <i onclick="toggleEntry(${index})" data-lucide="chevron-up" class="w-4 h-4 cursor-pointer text-gray-400"></i>
+                        </div>
+                        <textarea class="diary-textarea" oninput="updateEntry(${index}, this.value)">${entry.text}</textarea>
+                        <p class="text-[10px] text-gray-500 mt-2 italic text-right">Изменения сохраняются автоматически</p>
+                    `;
+                }
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function toggleEntry(index) {
+            diaryEntries[index].expanded = !diaryEntries[index].expanded;
+            renderDiary();
+        }
+
+        function updateEntry(index, value) {
+            diaryEntries[index].text = value;
+        }
+
+        function addNewDiaryEntry() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString() + ", " + now.toLocaleTimeString().slice(0,5);
+            
+            diaryEntries.unshift({
+                id: Date.now(),
+                date: dateStr,
+                color: "green",
+                text: "Новая запись...",
+                expanded: true
+            });
+            renderDiary();
+        }
+
+        function toggleDiaryPrivacy() {
+            renderDiary(); 
+        }
+
+        // --- UPCOMING LOGIC ---
+        function toggleUpcoming() {
+            const details = document.getElementById('upcoming-details');
+            const arrow = document.getElementById('upcoming-arrow');
+            
+            if (details.classList.contains('hidden')) {
+                details.classList.remove('hidden');
+                details.classList.add('animate-fade-in');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                details.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // --- GEMINI CORE FUNCTION ---
+        async function sendGemini(inputId, outputId, systemContext) {
+            const input = document.getElementById(inputId);
+            const output = document.getElementById(outputId);
+            const text = input.value;
+            if(!text) return;
+
+            // UI User Msg
+            const userDiv = document.createElement('div');
+            userDiv.className = "bg-blue-600/30 p-2 rounded-lg rounded-tr-none self-end text-right ml-auto max-w-[85%] mb-2 text-sm";
+            userDiv.innerText = text;
+            output.appendChild(userDiv);
+            input.value = '';
+            output.scrollTop = output.scrollHeight;
+
+            // UI Loading
+            const loadDiv = document.createElement('div');
+            loadDiv.className = "text-gray-500 text-xs italic animate-pulse mb-2";
+            loadDiv.innerText = "Анализ данных...";
+            output.appendChild(loadDiv);
+
+            try {
+                // Using v1beta
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: `System: ${systemContext}. User Question: ${text}` }]
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                output.removeChild(loadDiv);
+                
+                let reply = "Извините, сервис временно недоступен.";
+                if(data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    reply = data.candidates[0].content.parts[0].text;
+                } else if (data.error) {
+                    reply = "Ошибка API: " + data.error.message;
+                }
+                
+                const botDiv = document.createElement('div');
+                botDiv.className = "bg-gray-700/50 p-3 rounded-lg rounded-tl-none self-start max-w-[90%] mb-2 text-sm";
+                // Simple markdown parsing for bold
+                reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-300">$1</strong>');
+                botDiv.innerHTML = `<strong class="text-purple-300 block text-xs mb-1">Health AI</strong>${reply}`;
+                output.appendChild(botDiv);
+                output.scrollTop = output.scrollHeight;
+
+            } catch(e) {
+                console.error(e);
+                output.removeChild(loadDiv);
+                const errDiv = document.createElement('div');
+                errDiv.className = "text-red-400 text-xs mb-2";
+                errDiv.innerText = "Ошибка соединения";
+                output.appendChild(errDiv);
+            }
+        }
+
+        // --- CATEGORY DATA LOGIC ---
+        const categoryList = [
+            { id: 'heart', name: 'Сердце', icon: 'heart', bars: [1,1,0,1,1] },
+            { id: 'immunity', name: 'Иммунитет', icon: 'shield', bars: [1,1,1] },
+            { id: 'gender', name: 'Муж/Жен здоровье', icon: 'users', bars: [1,0,1] },
+            { id: 'meta', name: 'Метаболизм', icon: 'zap', bars: [0,0,1,1] },
+            { id: 'toxins', name: 'Токсины окр. среды', icon: 'biohazard', bars: [1,1] },
+            { id: 'age', name: 'Биологич. возраст', icon: 'hourglass', bars: [1,1,1,1] },
+            { id: 'vitamins', name: 'Витамины', icon: 'pill', bars: [0,1,1] },
+            { id: 'stress', name: 'Стресс и старение', icon: 'brain-circuit', bars: [1,0] },
+            { id: 'liver', name: 'Печень', icon: 'activity', bars: [1,1,1] }, 
+            { id: 'blood', name: 'Кровь', icon: 'droplet', bars: [1,1,1,1,1] },
+            { id: 'kidney', name: 'Почки', icon: 'activity', bars: [1,1] },
+            { id: 'pancreas', name: 'Поджелудочная', icon: 'activity', bars: [1] },
+            { id: 'brain', name: 'Мозг', icon: 'brain', bars: [1,1,1] },
+            { id: 'elctro', name: 'Электролиты', icon: 'zap', bars: [1,1,0] },
+            { id: 'allergy', name: 'Аллергия', icon: 'flower', bars: [0,0] },
+            { id: 'sex', name: 'Сексуальное здоровье', icon: 'heart-handshake', bars: [1,1] },
+            { id: 'bones', name: 'Здоровье костей', icon: 'bone', bars: [1,1,1] },
+            { id: 'infect', name: 'Инфекции', icon: 'bug', bars: [1] },
+            { id: 'mri', name: 'МРТ и КТ', icon: 'scan-line', bars: [] }
+        ];
+
+        // Specific data only for Heart as requested
+        const categoryTestsData = {
+            'heart': [
+                { id: 'apo_b', name: "Аполипопротеин В", val: "84 ммоль/л", ref: "< 1.0", status: "norm" }, 
+                { id: 'hdl', name: "Холестерол-ЛПВП", val: "50 ммоль/л", ref: "> 1.0", status: "norm" },
+                { id: 'crp', name: "Высокочувствительный С-реактивный белок (кардио)", val: "89 ммоль/л", ref: "< 1.0", status: "norm", desc: "Маркер воспаления сосудов" },
+                { id: 'ldl', name: "Холестерин липопротеидов низкой плотности, прямой метод", val: "111 ммоль/л", ref: "< 3.0", status: "norm" },
+                { id: 'lpa', name: "Липопротеин (a)", val: "...", ref: "< 0.3", status: "norm" },
+                { id: 'chol_tot', name: "Холестерол общий", val: "...", ref: "< 5.2", status: "norm" }
+            ]
+        };
+
+        let activeCategoryId = null;
+
+        function renderCategories() {
+            const grid = document.getElementById('categories-grid');
+            grid.innerHTML = '';
+            
+            categoryList.forEach(cat => {
+                // Generate bars HTML
+                let barsHtml = '';
+                if(cat.bars.length > 0) {
+                    barsHtml = '<div class="flex gap-1 mt-3">';
+                    cat.bars.forEach(b => {
+                        barsHtml += `<div class="h-1.5 w-6 rounded-full ${b === 1 ? 'bg-green-500' : 'bg-red-400'}"></div>`;
+                    });
+                    barsHtml += '</div>';
+                }
+
+                const el = document.createElement('div');
+                el.className = 'glass-card p-4 flex flex-col justify-between min-h-[100px] cursor-pointer hover:bg-white/5 active:scale-95 transition relative overflow-hidden';
+                el.onclick = () => openCategory(cat.id, cat.name);
+                
+                el.innerHTML = `
+                    <div class="flex items-center gap-2 mb-1">
+                        <i data-lucide="${cat.icon}" class="w-5 h-5 text-gray-400"></i>
+                        <h3 class="font-bold text-sm leading-tight">${cat.name}</h3>
+                    </div>
+                    ${barsHtml}
+                    ${cat.bars.length === 0 ? '<span class="text-[10px] text-gray-500 mt-2">Нет данных</span>' : ''}
+                `;
+                grid.appendChild(el);
+            });
+            lucide.createIcons();
+        }
+
+        function openCategory(id, name) {
+            activeCategoryId = id;
+            
+            // Hide categories screen, show category view
+            document.getElementById('screen-analyses').classList.add('hidden');
+            document.getElementById('screen-category-view').classList.remove('hidden');
+            document.getElementById('category-title').innerText = name;
+            
+            const listContainer = document.getElementById('category-tests-list');
+            listContainer.innerHTML = '';
+
+            const tests = categoryTestsData[id];
+            
+            if (!tests) {
+                listContainer.innerHTML = '<div class="text-center text-gray-400 mt-10">Данные для этой категории загружаются...<br>(Доступно только "Сердце" в демо)</div>';
+                return;
+            }
+
+            tests.forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'glass-card p-4 flex justify-between items-center cursor-pointer hover:bg-white/5';
+                item.onclick = () => showTestDetail(t);
+                
+                // Special check for "In Progress" items to change list appearance slightly
+                const isInProgress = (t.id === 'lpa' || t.id === 'chol_tot');
+                const valDisplay = isInProgress ? '<i data-lucide="hourglass" class="w-3 h-3 text-yellow-400 animate-spin-slow"></i>' : t.val;
+
+                item.innerHTML = `
+                    <div class="flex-1 pr-2">
+                        <h4 class="font-bold text-sm text-gray-200 mb-1">${t.name}</h4>
+                        <div class="flex items-center gap-2 text-xs">
+                             <span class="text-gray-400">${valDisplay}</span>
+                             ${t.status === 'warn' ? '<span class="text-red-400 bg-red-400/10 px-1 rounded">Отклонение</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="h-8 w-1 rounded-full ${isInProgress ? 'bg-yellow-500/50' : (t.status === 'norm' ? 'bg-green-500' : 'bg-red-500')}"></div>
+                `;
+                listContainer.appendChild(item);
+            });
+            lucide.createIcons();
+        }
+
+        let currentAnalysisContext = "";
+
+        function showTestDetail(testData) {
+            document.getElementById('screen-category-view').classList.add('hidden');
+            document.getElementById('screen-analysis-detail').classList.remove('hidden');
+            
+            document.getElementById('detail-title').innerText = testData.name;
+            const content = document.getElementById('detail-content');
+            
+            // Context for AI
+            currentAnalysisContext = `Ты врач. Пользователь смотрит результат анализа "${testData.name}". Значение: ${testData.val}. Референс: ${testData.ref}. Статус: ${testData.status === 'norm' ? 'Норма' : 'Отклонение'}. Объясни значение, риски и рекомендации кратко.`;
+
+            // Clear chat
+            document.getElementById('analysis-chat-output').innerHTML = '';
+
+            // --- HELPER FOR GRAPH (REUSABLE COMPONENT STRING) ---
+            const getGraphHTML = (title, valueStr, desc, diseases, prevVal, currVal) => `
+                <div class="glass-card p-6 relative overflow-hidden">
+                   <div class="flex flex-col gap-6">
+                       <div class="z-10 relative">
+                           <h2 class="text-3xl font-serif-display text-white mb-2">${title}</h2>
+                           <div class="text-xl font-bold text-white mb-4">В норме ${valueStr}</div>
+                           <p class="text-xs text-gray-300 leading-relaxed mb-4">${desc}</p>
+                           <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                               <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p>
+                               <ul class="text-xs text-gray-300 space-y-1">
+                                   ${diseases.map(d => `<li>• ${d}</li>`).join('')}
+                               </ul>
+                           </div>
+                       </div>
+                       <div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2">
+                            <div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4">
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]"></div> В НОРМЕ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> НИЖЕ НОРМЫ</div>
+                            </div>
+                            <div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            <div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            <div class="absolute top-[20%] right-[35%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-gray-300 mb-1">${prevVal}</span>
+                                 <div class="w-3 h-3 rounded-full border-2 border-orange-400 bg-[#1e1b4b]"></div>
+                            </div>
+                            <div class="absolute top-[50%] right-[10%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-green-400 mb-1">${currVal}</span>
+                                 <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]"></div>
+                            </div>
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                                <line x1="65%" y1="25%" x2="90%" y2="55%" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                            </svg>
+                       </div>
+                   </div>
+                </div>
+            `;
+
+            if (testData.id === 'apo_b') {
+                content.innerHTML = getGraphHTML(
+                    '(ApoB)', '84 ммоль/л', 
+                    'Позволяет напрямую подсчитать количество холестериновых частиц, образующих бляшки, в крови. Это мощный индикатор вредных частиц, которые повышают риск сердечно-сосудистых заболеваний и способствуют нарушению обмена веществ.', 
+                    ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Дислипидемия', 'Метаболический синдром', 'Сахарный диабет 2 типа или инсулинорезистентонсть'],
+                    '93', '84'
+                ) + `
+                    <div class="flex flex-col items-center -mt-6 relative z-0">
+                        <div class="h-8 w-px bg-white/20"></div>
+                    </div>
+                    <div class="glass-card flex items-center gap-4 p-4 border border-orange-400/30">
+                         <div class="p-3 bg-orange-500/20 rounded-xl text-orange-400"><i data-lucide="fish" class="w-6 h-6"></i></div>
+                         <div><h4 class="font-bold text-sm">Омега-3 жирные кислоты</h4><p class="text-xs text-gray-400">Лосось 2 раза в неделю</p></div>
+                    </div>
+                `;
+            } else if (testData.id === 'hdl') {
+                content.innerHTML = getGraphHTML(
+                    'Холестерол-ЛПВП', '50 ммоль/л',
+                    'Показатель полезного холестерина, поддерживающего здоровье сердца. Основная задача — удалять избыток холестерина из крови и транспортировать его в печень для выведения, снижая риск сердечно-сосудистых заболеваний.',
+                    ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Метаболический синдром', 'Ожирение', 'Инсулинорезистентонсть'],
+                    '45', '50'
+                );
+            } else if (testData.id === 'crp') {
+                content.innerHTML = getGraphHTML(
+                    'Высокочувств. CRP', '89 ммоль/л',
+                    'Может выявлять даже небольшое количество воспаления в организме. Хроническое воспаление связано почти со всеми серьезными проблемами со здоровьем, включая болезни сердца, диабет 2 типа, высокое кровяное давление, и др.',
+                    ['Хроническое давление', 'Сердечно сосудистые заболевания', 'Метаболический синдром', 'Инфекции', 'Аутоимунное заболевание'],
+                    '88', '89'
+                );
+            } else if (testData.id === 'ldl') {
+                content.innerHTML = getGraphHTML(
+                    'Холестерин ЛПНП', '111 ммоль/л',
+                    'Отвечает за перенос холестерина из печени в клетки по всему организму. Часто называют «плохим» холестерином, потому что при избытке он может откладываться в стенках артерий, вызывая образование бляшек.',
+                    ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Метаболический синдром', 'Гиперлипидемия', 'Ожирение'],
+                    '120', '111'
+                );
+            } else if (testData.id === 'lpa' || testData.id === 'chol_tot') {
+                // IN PROCESS PANEL
+                content.innerHTML = `
+                    <div class="glass-card p-8 flex flex-col items-center justify-center text-center min-h-[300px] border border-blue-500/30 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-blue-500/5 animate-pulse-glow"></div>
+                        <div class="w-24 h-24 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 animate-spin-slow border border-blue-400/30">
+                            <i data-lucide="loader-2" class="w-10 h-10 text-blue-400"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white mb-2">Анализ в процессе</h2>
+                        <p class="text-sm text-gray-400 max-w-[200px]">Ваши образцы находятся в лаборатории. Мы уведомим вас, когда результаты будут готовы.</p>
+                        <div class="mt-6 px-4 py-2 bg-white/5 rounded-full text-xs font-mono text-blue-300">
+                            Ожидаемое время: 24ч
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Fallback for others
+                content.innerHTML = `<div class="glass-card p-5">Нет детальной информации</div>`;
+            }
+            lucide.createIcons();
+        }
+
+        function backToCategory() {
+            document.getElementById('screen-analysis-detail').classList.add('hidden');
+            document.getElementById('screen-category-view').classList.remove('hidden');
+        }
+
+        function sendAnalysisQuestion() {
+            if(!currentAnalysisContext) return;
+            sendGemini('analysis-chat-input', 'analysis-chat-output', currentAnalysisContext);
+        }
+
+        // --- WORKOUTS LOGIC ---
+        function showWorkoutDetail(type) {
+            navigateTo('screen-workout-detail');
+            const title = document.getElementById('wo-detail-title');
+            const content = document.getElementById('wo-detail-content');
+            
+            if (type === 'cardio') {
+                title.innerText = "Кардио Программа";
+                content.innerHTML = `
+                    <div class="glass-card mb-4"><p>Эта программа направлена на укрепление сердечно-сосудистой системы и сжигание жира.</p></div>
+                    <div class="glass-card border-l-4 border-l-orange-400">
+                        <h4 class="font-bold">1. Разминка (5 мин)</h4>
+                        <p class="text-xs text-gray-400">Легкий бег на месте, вращение суставов.</p>
+                    </div>
+                    <div class="glass-card border-l-4 border-l-orange-400">
+                        <h4 class="font-bold">2. Интервальный бег (20 мин)</h4>
+                        <p class="text-xs text-gray-400">1 мин ускорение / 2 мин ходьба.</p>
+                    </div>
+                    <div class="glass-card border-l-4 border-l-orange-400">
+                        <h4 class="font-bold">3. Берпи (3 подхода)</h4>
+                        <p class="text-xs text-gray-400">10 повторений, отдых 30 сек.</p>
+                    </div>
+                     <button class="btn-primary mt-4">Приступить</button>
+                `;
+            } else if (type === 'gym') {
+                title.innerText = "Силовая (Зал)";
+                content.innerHTML = `
+                    <div class="glass-card mb-4"><p>Базовая программа на все тело (Full Body).</p></div>
+                    <div class="glass-card border-l-4 border-l-blue-400">
+                        <h4 class="font-bold">1. Жим лежа</h4>
+                        <p class="text-xs text-gray-400">3 подхода по 10 раз.</p>
+                    </div>
+                    <div class="glass-card border-l-4 border-l-blue-400">
+                        <h4 class="font-bold">2. Приседания со штангой</h4>
+                        <p class="text-xs text-gray-400">3 подхода по 12 раз.</p>
+                    </div>
+                     <button class="btn-primary mt-4">Приступить</button>
+                `;
+            } else if (type === 'yoga') {
+                title.innerText = "Йога";
+                content.innerHTML = `
+                    <div class="glass-card mb-4"><p>Комплекс Сурья Намаскар (Приветствие солнцу).</p></div>
+                    <div class="glass-card border-l-4 border-l-purple-400"><h4 class="font-bold">1. Поза горы</h4></div>
+                    <div class="glass-card border-l-4 border-l-purple-400"><h4 class="font-bold">2. Наклон вперед</h4></div>
+                     <button class="btn-primary mt-4">Приступить</button>
+                `;
+            } else if (type === 'morning') {
+                title.innerText = "Утренний Тонус";
+                content.innerHTML = `
+                    <div class="glass-card mb-4"><p>Зарядка для пробуждения организма.</p></div>
+                    <div class="glass-card border-l-4 border-l-teal-400"><h4 class="font-bold">1. Прыжки на месте (30 сек)</h4></div>
+                    <div class="glass-card border-l-4 border-l-teal-400"><h4 class="font-bold">2. Отжимания (15 раз)</h4></div>
+                    <div class="glass-card border-l-4 border-l-teal-400"><h4 class="font-bold">3. Планка (45 сек)</h4></div>
+                     <button class="btn-primary mt-4">Начать</button>
+                `;
+            }
+        }
+
+        // --- LAB BOOKING ---
+        function bookLab() {
+            const toast = document.getElementById('toast');
+            toast.innerText = "Вы успешно записаны! Вся информация сохранена в разделе «Здоровье».";
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+    </script>
+</body>
+</html>
