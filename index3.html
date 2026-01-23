@@ -812,33 +812,35 @@
         }
 
         // --- CATEGORY DATA LOGIC ---
+        // Updated stats to match the request (Red/Green/Gray badges)
         const categoryList = [
-            { id: 'heart', name: 'Сердце', icon: 'heart', bars: [1,1,0,1,1] },
-            { id: 'immunity', name: 'Иммунитет', icon: 'shield', bars: [1,1,1] },
-            { id: 'gender', name: 'Муж/Жен здоровье', icon: 'users', bars: [1,0,1] },
-            { id: 'meta', name: 'Метаболизм', icon: 'zap', bars: [0,0,1,1] },
-            { id: 'toxins', name: 'Токсины окр. среды', icon: 'biohazard', bars: [1,1] },
-            { id: 'age', name: 'Биологич. возраст', icon: 'hourglass', bars: [1,1,1,1] },
-            { id: 'vitamins', name: 'Витамины', icon: 'pill', bars: [0,1,1] },
-            { id: 'stress', name: 'Стресс и старение', icon: 'brain-circuit', bars: [1,0] },
-            { id: 'liver', name: 'Печень', icon: 'activity', bars: [1,1,1] }, 
-            { id: 'blood', name: 'Кровь', icon: 'droplet', bars: [1,1,1,1,1] },
-            { id: 'kidney', name: 'Почки', icon: 'activity', bars: [1,1] },
-            { id: 'pancreas', name: 'Поджелудочная', icon: 'activity', bars: [1] },
-            { id: 'brain', name: 'Мозг', icon: 'brain', bars: [1,1,1] },
-            { id: 'elctro', name: 'Электролиты', icon: 'zap', bars: [1,1,0] },
-            { id: 'allergy', name: 'Аллергия', icon: 'flower', bars: [0,0] },
-            { id: 'sex', name: 'Сексуальное здоровье', icon: 'heart-handshake', bars: [1,1] },
-            { id: 'bones', name: 'Здоровье костей', icon: 'bone', bars: [1,1,1] },
-            { id: 'infect', name: 'Инфекции', icon: 'bug', bars: [1] },
-            { id: 'mri', name: 'МРТ и КТ', icon: 'scan-line', bars: [] }
+            { id: 'heart', name: 'Сердце', icon: 'heart', stats: { green: 3, red: 1, gray: 2 } },
+            { id: 'immunity', name: 'Иммунитет', icon: 'shield', stats: { green: 11, red: 1, gray: 0 } },
+            { id: 'gender', name: 'Муж/Жен здоровье', icon: 'users', stats: { green: 8, red: 1, gray: 0 } },
+            { id: 'meta', name: 'Метаболизм', icon: 'zap', stats: { green: 4, red: 1, gray: 0 } },
+            { id: 'toxins', name: 'Токсины окр. среды', icon: 'biohazard', stats: { green: 2, red: 0, gray: 0 } },
+            { id: 'age', name: 'Биологич. возраст', icon: 'hourglass', stats: { green: 1, red: 0, gray: 0 } },
+            { id: 'vitamins', name: 'Витамины', icon: 'pill', stats: { green: 18, red: 1, gray: 0 } },
+            { id: 'stress', name: 'Стресс и старение', icon: 'brain-circuit', stats: { green: 2, red: 0, gray: 0 } },
+            { id: 'liver', name: 'Печень', icon: 'activity', stats: { green: 9, red: 0, gray: 0 } }, 
+            { id: 'blood', name: 'Кровь', icon: 'droplet', stats: { green: 10, red: 1, gray: 0 } },
+            { id: 'kidney', name: 'Почки', icon: 'activity', stats: { green: 8, red: 0, gray: 0 } },
+            { id: 'pancreas', name: 'Поджелудочная', icon: 'activity', stats: { green: 2, red: 0, gray: 0 } },
+            { id: 'brain', name: 'Мозг', icon: 'brain', stats: { green: 5, red: 0, gray: 0 } },
+            { id: 'elctro', name: 'Электролиты', icon: 'zap', stats: { green: 6, red: 0, gray: 0 } },
+            { id: 'allergy', name: 'Аллергия', icon: 'flower', stats: { green: 2, red: 0, gray: 0 } },
+            { id: 'sex', name: 'Сексуальное здоровье', icon: 'heart-handshake', stats: { green: 3, red: 0, gray: 0 } },
+            { id: 'bones', name: 'Здоровье костей', icon: 'bone', stats: { green: 4, red: 0, gray: 0 } },
+            { id: 'infect', name: 'Инфекции', icon: 'bug', stats: { green: 1, red: 0, gray: 0 } },
+            { id: 'mri', name: 'МРТ и КТ', icon: 'scan-line', stats: { green: 0, red: 0, gray: 1 } }
         ];
 
         // Specific data only for Heart as requested
         const categoryTestsData = {
             'heart': [
                 { id: 'apo_b', name: "Аполипопротеин В", val: "84 ммоль/л", ref: "< 1.0", status: "norm" }, 
-                { id: 'hdl', name: "Холестерол-ЛПВП", val: "50 ммоль/л", ref: "> 1.0", status: "norm" },
+                // HDL updated to WARN status as requested
+                { id: 'hdl', name: "Холестерол-ЛПВП", val: "50 ммоль/л", ref: "> 1.0", status: "warn" },
                 { id: 'crp', name: "Высокочувствительный С-реактивный белок (кардио)", val: "89 ммоль/л", ref: "< 1.0", status: "norm", desc: "Маркер воспаления сосудов" },
                 { id: 'ldl', name: "Холестерин липопротеидов низкой плотности, прямой метод", val: "111 ммоль/л", ref: "< 3.0", status: "norm" },
                 { id: 'lpa', name: "Липопротеин (a)", val: "...", ref: "< 0.3", status: "norm" },
@@ -853,27 +855,45 @@
             grid.innerHTML = '';
             
             categoryList.forEach(cat => {
-                // Generate bars HTML
-                let barsHtml = '';
-                if(cat.bars.length > 0) {
-                    barsHtml = '<div class="flex gap-1 mt-3">';
-                    cat.bars.forEach(b => {
-                        barsHtml += `<div class="h-1.5 w-6 rounded-full ${b === 1 ? 'bg-green-500' : 'bg-red-400'}"></div>`;
-                    });
-                    barsHtml += '</div>';
-                }
-
                 const el = document.createElement('div');
                 el.className = 'glass-card p-4 flex flex-col justify-between min-h-[100px] cursor-pointer hover:bg-white/5 active:scale-95 transition relative overflow-hidden';
                 el.onclick = () => openCategory(cat.id, cat.name);
                 
+                // Badges HTML generation
+                let badgesHtml = '<div class="flex flex-wrap gap-2 mt-3">';
+                
+                // Green Badge
+                if (cat.stats.green > 0) {
+                    badgesHtml += `
+                        <div class="flex items-center gap-1.5 bg-emerald-500/20 px-2 py-1 rounded text-[10px] text-emerald-300 font-bold border border-emerald-500/10">
+                            <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> ${cat.stats.green}
+                        </div>
+                    `;
+                }
+                // Red Badge
+                if (cat.stats.red > 0) {
+                     badgesHtml += `
+                        <div class="flex items-center gap-1.5 bg-red-500/20 px-2 py-1 rounded text-[10px] text-red-300 font-bold border border-red-500/10">
+                            <div class="w-1.5 h-1.5 rounded-full bg-red-400"></div> ${cat.stats.red}
+                        </div>
+                    `;
+                }
+                 // Gray Badge
+                if (cat.stats.gray > 0) {
+                     badgesHtml += `
+                        <div class="flex items-center gap-1.5 bg-gray-500/20 px-2 py-1 rounded text-[10px] text-gray-300 font-bold border border-gray-500/10">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-400"></div> ${cat.stats.gray}
+                        </div>
+                    `;
+                }
+                badgesHtml += '</div>';
+
                 el.innerHTML = `
                     <div class="flex items-center gap-2 mb-1">
                         <i data-lucide="${cat.icon}" class="w-5 h-5 text-gray-400"></i>
                         <h3 class="font-bold text-sm leading-tight">${cat.name}</h3>
                     </div>
-                    ${barsHtml}
-                    ${cat.bars.length === 0 ? '<span class="text-[10px] text-gray-500 mt-2">Нет данных</span>' : ''}
+                    ${badgesHtml}
                 `;
                 grid.appendChild(el);
             });
@@ -903,19 +923,25 @@
                 item.className = 'glass-card p-4 flex justify-between items-center cursor-pointer hover:bg-white/5';
                 item.onclick = () => showTestDetail(t);
                 
-                // Special check for "In Progress" items to change list appearance slightly
+                // Special check for "In Progress" items
                 const isInProgress = (t.id === 'lpa' || t.id === 'chol_tot');
                 const valDisplay = isInProgress ? '<i data-lucide="hourglass" class="w-3 h-3 text-yellow-400 animate-spin-slow"></i>' : t.val;
-
+                
+                // --- Highlight HDL as RED if warned ---
+                const isWarn = t.status === 'warn';
+                
                 item.innerHTML = `
                     <div class="flex-1 pr-2">
-                        <h4 class="font-bold text-sm text-gray-200 mb-1">${t.name}</h4>
+                        <h4 class="font-bold text-sm ${isWarn ? 'text-red-300' : 'text-gray-200'} mb-1 flex items-center gap-2">
+                            ${t.name}
+                            ${isWarn ? '<i data-lucide="alert-circle" class="w-3 h-3 text-red-400"></i>' : ''}
+                        </h4>
                         <div class="flex items-center gap-2 text-xs">
                              <span class="text-gray-400">${valDisplay}</span>
-                             ${t.status === 'warn' ? '<span class="text-red-400 bg-red-400/10 px-1 rounded">Отклонение</span>' : ''}
+                             ${isWarn ? '<span class="text-red-400 bg-red-400/10 px-1 rounded">Отклонение</span>' : ''}
                         </div>
                     </div>
-                    <div class="h-8 w-1 rounded-full ${isInProgress ? 'bg-yellow-500/50' : (t.status === 'norm' ? 'bg-green-500' : 'bg-red-500')}"></div>
+                    <div class="h-8 w-1 rounded-full ${isInProgress ? 'bg-yellow-500/50' : (isWarn ? 'bg-red-500' : 'bg-green-500')}"></div>
                 `;
                 listContainer.appendChild(item);
             });
@@ -931,14 +957,12 @@
             document.getElementById('detail-title').innerText = testData.name;
             const content = document.getElementById('detail-content');
             
-            // Context for AI
             currentAnalysisContext = `Ты врач. Пользователь смотрит результат анализа "${testData.name}". Значение: ${testData.val}. Референс: ${testData.ref}. Статус: ${testData.status === 'norm' ? 'Норма' : 'Отклонение'}. Объясни значение, риски и рекомендации кратко.`;
-
-            // Clear chat
             document.getElementById('analysis-chat-output').innerHTML = '';
 
-            // --- HELPER FOR GRAPH (REUSABLE COMPONENT STRING) ---
-            const getGraphHTML = (title, valueStr, desc, diseases, prevVal, currVal) => `
+            // --- REUSABLE GRAPH COMPONENT ---
+            // Added params: boundaries (60, 45) and dates
+            const getGraphHTML = (title, valueStr, desc, diseases, prevVal, currVal, boundaries = null, dates = null) => `
                 <div class="glass-card p-6 relative overflow-hidden">
                    <div class="flex flex-col gap-6">
                        <div class="z-10 relative">
@@ -960,17 +984,30 @@
                             </div>
                             <div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div>
                             <div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div>
-                            <div class="absolute top-[20%] right-[35%] flex flex-col items-center z-10">
+                            
+                            ${boundaries ? `
+                                <div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">${boundaries[0]}*</div>
+                                <div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">${boundaries[1]}*</div>
+                            ` : ''}
+
+                            <div class="absolute top-[${title.includes('ЛПВП') ? '10%' : '20%'}] right-[35%] flex flex-col items-center z-10">
                                  <span class="text-xs font-bold text-gray-300 mb-1">${prevVal}</span>
                                  <div class="w-3 h-3 rounded-full border-2 border-orange-400 bg-[#1e1b4b]"></div>
+                                 ${dates ? `<span class="text-[9px] text-white/40 mt-1 font-mono">${dates[0]}</span>` : ''}
                             </div>
+                            
                             <div class="absolute top-[50%] right-[10%] flex flex-col items-center z-10">
                                  <span class="text-xs font-bold text-green-400 mb-1">${currVal}</span>
                                  <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]"></div>
+                                 ${dates ? `<span class="text-[9px] text-white/40 mt-1 font-mono">${dates[1]}</span>` : ''}
                             </div>
+                            
                             <svg class="absolute inset-0 w-full h-full pointer-events-none">
-                                <line x1="65%" y1="25%" x2="90%" y2="55%" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <line x1="65%" y1="${title.includes('ЛПВП') ? '15%' : '25%'}" x2="90%" y2="55%" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
                             </svg>
+                       </div>
+                       <div class="text-[9px] text-gray-500 mt-2 pt-2 border-t border-white/5">
+                           * границы норма в соответствии с данными Министерства здравоохранения РК
                        </div>
                    </div>
                 </div>
@@ -979,8 +1016,8 @@
             if (testData.id === 'apo_b') {
                 content.innerHTML = getGraphHTML(
                     '(ApoB)', '84 ммоль/л', 
-                    'Позволяет напрямую подсчитать количество холестериновых частиц, образующих бляшки, в крови. Это мощный индикатор вредных частиц, которые повышают риск сердечно-сосудистых заболеваний и способствуют нарушению обмена веществ.', 
-                    ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Дислипидемия', 'Метаболический синдром', 'Сахарный диабет 2 типа или инсулинорезистентонсть'],
+                    'Позволяет напрямую подсчитать количество холестериновых частиц, образующих бляшки, в крови. Это мощный индикатор вредных частиц, которые повышают риск сердечно-сосудистых заболеваний.', 
+                    ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Дислипидемия', 'Метаболический синдром', 'Сахарный диабет 2 типа'],
                     '93', '84'
                 ) + `
                     <div class="flex flex-col items-center -mt-6 relative z-0">
@@ -994,26 +1031,27 @@
             } else if (testData.id === 'hdl') {
                 content.innerHTML = getGraphHTML(
                     'Холестерол-ЛПВП', '50 ммоль/л',
-                    'Показатель полезного холестерина, поддерживающего здоровье сердца. Основная задача — удалять избыток холестерина из крови и транспортировать его в печень для выведения, снижая риск сердечно-сосудистых заболеваний.',
+                    'Показатель полезного холестерина, поддерживающего здоровье сердца. Основная задача — удалять избыток холестерина из крови и транспортировать его в печень для выведения.',
                     ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Метаболический синдром', 'Ожирение', 'Инсулинорезистентонсть'],
-                    '45', '50'
+                    '52', '50', // Vals
+                    ['60', '45'], // Boundaries
+                    ['06.06.2025', '06.12.2025'] // Dates
                 );
             } else if (testData.id === 'crp') {
                 content.innerHTML = getGraphHTML(
                     'Высокочувств. CRP', '89 ммоль/л',
-                    'Может выявлять даже небольшое количество воспаления в организме. Хроническое воспаление связано почти со всеми серьезными проблемами со здоровьем, включая болезни сердца, диабет 2 типа, высокое кровяное давление, и др.',
+                    'Может выявлять даже небольшое количество воспаления в организме. Хроническое воспаление связано почти со всеми серьезными проблемами со здоровьем.',
                     ['Хроническое давление', 'Сердечно сосудистые заболевания', 'Метаболический синдром', 'Инфекции', 'Аутоимунное заболевание'],
                     '88', '89'
                 );
             } else if (testData.id === 'ldl') {
                 content.innerHTML = getGraphHTML(
                     'Холестерин ЛПНП', '111 ммоль/л',
-                    'Отвечает за перенос холестерина из печени в клетки по всему организму. Часто называют «плохим» холестерином, потому что при избытке он может откладываться в стенках артерий, вызывая образование бляшек.',
+                    'Отвечает за перенос холестерина из печени в клетки по всему организму. Часто называют «плохим» холестерином.',
                     ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Метаболический синдром', 'Гиперлипидемия', 'Ожирение'],
                     '120', '111'
                 );
             } else if (testData.id === 'lpa' || testData.id === 'chol_tot') {
-                // IN PROCESS PANEL
                 content.innerHTML = `
                     <div class="glass-card p-8 flex flex-col items-center justify-center text-center min-h-[300px] border border-blue-500/30 relative overflow-hidden">
                         <div class="absolute inset-0 bg-blue-500/5 animate-pulse-glow"></div>
@@ -1027,9 +1065,6 @@
                         </div>
                     </div>
                 `;
-            } else {
-                // Fallback for others
-                content.innerHTML = `<div class="glass-card p-5">Нет детальной информации</div>`;
             }
             lucide.createIcons();
         }
