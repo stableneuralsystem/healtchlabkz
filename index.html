@@ -235,7 +235,12 @@
                         <div class="p-2 rounded-full bg-red-500/20 text-red-400 w-fit mb-2"><i data-lucide="message-square-warning" class="w-6 h-6"></i></div>
                         <div><h3 class="font-semibold text-sm">Жалобы</h3><p class="text-[10px] text-gray-400">AI Чат</p></div>
                     </div>
-                </div>
+                    
+                    <div onclick="navigateTo('screen-devices')" class="glass-card flex flex-col justify-between h-32 cursor-pointer border border-purple-500/30">
+                        <div class="p-2 rounded-full bg-purple-500/20 text-purple-400 w-fit mb-2"><i data-lucide="watch" class="w-6 h-6"></i></div>
+                        <div><h3 class="font-semibold text-sm leading-tight">Подключить оборудование</h3><p class="text-[10px] text-gray-400 mt-1">Apple, Garmin</p></div>
+                    </div>
+                    </div>
 
                 <div onclick="navigateTo('screen-voice-analysis')" class="glass-card flex items-center gap-4 cursor-pointer border-l-4 border-l-pink-500 bg-pink-500/5 hover:bg-pink-500/10 transition mt-2">
                     <div class="p-3 rounded-full bg-pink-500/20 text-pink-400 animate-pulse">
@@ -250,7 +255,62 @@
 
             </div>
         </section>
+        
+        <section id="screen-devices" class="hidden min-h-screen p-6 pb-24">
+            <div class="flex items-center gap-3 mb-6">
+                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-bold text-lg">Подключить оборудование</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <p class="text-xs text-gray-400 mb-2">Выберите устройство для синхронизации данных.</p>
+                
+                <div class="glass-card flex items-center justify-between p-4">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-white/10 p-2 rounded-xl"><i data-lucide="activity" class="w-6 h-6 text-white"></i></div>
+                        <div>
+                            <h4 class="font-bold text-sm">Apple Health</h4>
+                            <p class="text-[10px] text-gray-400">iOS Sync</p>
+                        </div>
+                    </div>
+                    <button onclick="simulateConnection(this)" class="px-4 py-2 bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/40 text-blue-300 rounded-lg text-xs font-semibold transition-all">Подключить</button>
+                </div>
 
+                <div class="glass-card flex items-center justify-between p-4">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-blue-500/10 p-2 rounded-xl"><i data-lucide="watch" class="w-6 h-6 text-blue-400"></i></div>
+                        <div>
+                            <h4 class="font-bold text-sm">Garmin</h4>
+                            <p class="text-[10px] text-gray-400">Connect IQ</p>
+                        </div>
+                    </div>
+                    <button onclick="simulateConnection(this)" class="px-4 py-2 bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/40 text-blue-300 rounded-lg text-xs font-semibold transition-all">Подключить</button>
+                </div>
+
+                <div class="glass-card flex items-center justify-between p-4">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-purple-500/10 p-2 rounded-xl"><i data-lucide="circle-dot" class="w-6 h-6 text-purple-400"></i></div>
+                        <div>
+                            <h4 class="font-bold text-sm">Oura Ring</h4>
+                            <p class="text-[10px] text-gray-400">Sleep Tracking</p>
+                        </div>
+                    </div>
+                    <button onclick="simulateConnection(this)" class="px-4 py-2 bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/40 text-blue-300 rounded-lg text-xs font-semibold transition-all">Подключить</button>
+                </div>
+
+                <div class="glass-card flex items-center justify-between p-4">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-teal-500/10 p-2 rounded-xl"><i data-lucide="footprints" class="w-6 h-6 text-teal-400"></i></div>
+                        <div>
+                            <h4 class="font-bold text-sm">Fitbit</h4>
+                            <p class="text-[10px] text-gray-400">Google Health</p>
+                        </div>
+                    </div>
+                    <button onclick="simulateConnection(this)" class="px-4 py-2 bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/40 text-blue-300 rounded-lg text-xs font-semibold transition-all">Подключить</button>
+                </div>
+
+            </div>
+        </section>
         <section id="screen-health" class="hidden min-h-screen pb-20">
             <div class="sticky top-0 z-20 glass-panel p-4 flex items-center gap-3">
                 <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
@@ -290,7 +350,7 @@
                         <i data-lucide="triangle-alert" class="w-5 h-5 text-yellow-500 shrink-0 mt-0.5"></i>
                         <p class="text-xs text-yellow-200 leading-tight">Вам необходимо увеличить ваши шаги. В течение недели вы ходили меньше 5000. Мы рекомендуем 8000 шагов в день.</p>
                     </div>
-                     <button class="w-full mt-3 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-sm font-bold shadow-lg">Включить в план тренировок</button>
+                      <button class="w-full mt-3 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-sm font-bold shadow-lg">Включить в план тренировок</button>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
@@ -298,15 +358,15 @@
                         <div class="flex items-center gap-2 mb-2 text-green-400"><i data-lucide="activity" class="w-4 h-4"></i> <span class="text-xs">Качество сна</span></div>
                         <h3 class="text-xl font-bold">7.5 ч</h3>
                     </div>
-                     <div class="glass-card p-4">
+                      <div class="glass-card p-4">
                         <div class="flex items-center gap-2 mb-2 text-yellow-400"><i data-lucide="droplet" class="w-4 h-4"></i> <span class="text-xs">Вода</span></div>
                         <h3 class="text-xl font-bold">1.8 л</h3>
                     </div>
-                     <div class="glass-card p-4">
+                      <div class="glass-card p-4">
                         <div class="flex items-center gap-2 mb-2 text-teal-400"><i data-lucide="thermometer" class="w-4 h-4"></i> <span class="text-xs">Температура</span></div>
                         <h3 class="text-xl font-bold">36.6°C</h3>
                     </div>
-                     <div class="glass-card p-4">
+                      <div class="glass-card p-4">
                         <div class="flex items-center gap-2 mb-2 text-blue-400"><i data-lucide="zap" class="w-4 h-4"></i> <span class="text-xs">Энергия</span></div>
                         <h3 class="text-xl font-bold">78%</h3>
                     </div>
@@ -657,6 +717,25 @@
 
         function handleLogin() { navigateTo('screen-dashboard'); }
 
+        // --- DEVICE CONNECTION SIMULATION ---
+        function simulateConnection(btn) {
+            // Prevent multiple clicks
+            if(btn.disabled) return;
+            
+            // Animation State
+            btn.disabled = true;
+            const originalText = btn.innerText;
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 inline mr-1"></i> Поиск...';
+            lucide.createIcons();
+
+            setTimeout(() => {
+                // Success State
+                btn.className = "px-4 py-2 bg-green-500 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1";
+                btn.innerHTML = '<i data-lucide="check" class="w-4 h-4 inline"></i> Подключено';
+                lucide.createIcons();
+            }, 2500); // 2.5 seconds delay
+        }
+
         // --- HEARTBEAT ---
         let heartInt;
         function startHeart() {
@@ -983,7 +1062,7 @@
             // --- REUSABLE GRAPH COMPONENT ---
             const getGraphHTML = (title, valueStr, desc, diseases, prevVal, currVal, boundaries = null, dates = null) => `
                 <div class="glass-card p-6 relative overflow-hidden">
-                   <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-6">
                         <div class="z-10 relative">
                             <h2 class="text-3xl font-serif-display text-white mb-2">${title}</h2>
                             <div class="text-xl font-bold text-white mb-4">В норме ${valueStr}</div>
@@ -1074,7 +1153,7 @@
                  // Custom HTML for Cortisol to show HIGH value visually
                  content.innerHTML = `
                 <div class="glass-card p-6 relative overflow-hidden">
-                   <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-6">
                         <div class="z-10 relative">
                             <h2 class="text-3xl font-serif-display text-white mb-2">Кортизол</h2>
                             <div class="text-xl font-bold text-red-400 mb-4">Выше нормы 230 ммоль/л</div>
@@ -1124,7 +1203,7 @@
                  // Custom HTML for DHEA to show LOW value visually
                  content.innerHTML = `
                 <div class="glass-card p-6 relative overflow-hidden">
-                   <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-6">
                         <div class="z-10 relative">
                             <h2 class="text-3xl font-serif-display text-white mb-2">ДЭА-S04</h2>
                             <div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 30 ммоль/л</div>
@@ -1183,7 +1262,7 @@
                  // TOTAL TESTOSTERONE - LOW
                  content.innerHTML = `
                 <div class="glass-card p-6 relative overflow-hidden">
-                   <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-6">
                         <div class="z-10 relative">
                             <h2 class="text-3xl font-serif-display text-white mb-2">Тестостерон</h2>
                             <div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 10 ммоль/л</div>
@@ -1233,7 +1312,7 @@
                 // SHBG - LOW
                  content.innerHTML = `
                 <div class="glass-card p-6 relative overflow-hidden">
-                   <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-6">
                         <div class="z-10 relative">
                             <h2 class="text-3xl font-serif-display text-white mb-2">ГСПГ (SHBG)</h2>
                             <div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 10 ммоль/л</div>
