@@ -140,9 +140,6 @@
             display: block;
             min-height: 150px; /* Force minimum height */
         }
-        
-        /* Device connect animation */
-        .connecting-spin { animation: spin-slow 1s linear infinite; }
     </style>
 </head>
 <body class="antialiased text-gray-100">
@@ -214,11 +211,6 @@
                         <div><h3 class="font-semibold text-sm">Мои анализы</h3><p class="text-[10px] text-gray-400">Спектр и AI</p></div>
                     </div>
 
-                    <div onclick="navigateTo('screen-equipment')" class="glass-card flex flex-col justify-between h-32 cursor-pointer">
-                        <div class="p-2 rounded-full bg-cyan-500/20 text-cyan-400 w-fit mb-2"><i data-lucide="watch" class="w-6 h-6"></i></div>
-                        <div><h3 class="font-semibold text-sm">Подключить оборудование</h3><p class="text-[10px] text-gray-400">Интеграция</p></div>
-                    </div>
-
                     <div onclick="navigateTo('screen-upcoming')" class="glass-card flex flex-col justify-between h-32 cursor-pointer">
                         <div class="p-2 rounded-full bg-orange-500/20 text-orange-400 w-fit mb-2"><i data-lucide="calendar-clock" class="w-6 h-6"></i></div>
                         <div><h3 class="font-semibold text-sm">Предстоящие анализы</h3><p class="text-[10px] text-gray-400">3 записи</p></div>
@@ -238,17 +230,11 @@
                         <div class="p-2 rounded-full bg-emerald-500/20 text-emerald-400 w-fit mb-2"><i data-lucide="building-2" class="w-6 h-6"></i></div>
                         <div><h3 class="font-semibold text-sm">Лаборатория</h3><p class="text-[10px] text-gray-400">Запись</p></div>
                     </div>
-                </div>
 
-                <div onclick="navigateTo('screen-complaints')" class="glass-card flex items-center gap-4 cursor-pointer border-l-4 border-l-red-500 mt-2">
-                    <div class="p-3 rounded-full bg-red-500/20 text-red-400">
-                        <i data-lucide="message-square-warning" class="w-6 h-6"></i>
+                     <div onclick="navigateTo('screen-complaints')" class="glass-card flex flex-col justify-between h-32 cursor-pointer border border-red-500/30">
+                        <div class="p-2 rounded-full bg-red-500/20 text-red-400 w-fit mb-2"><i data-lucide="message-square-warning" class="w-6 h-6"></i></div>
+                        <div><h3 class="font-semibold text-sm">Жалобы</h3><p class="text-[10px] text-gray-400">AI Чат</p></div>
                     </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold">Жалобы</h3>
-                        <p class="text-xs text-gray-400">AI Чат с врачом</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="text-gray-500 w-5 h-5"></i>
                 </div>
 
                 <div onclick="navigateTo('screen-voice-analysis')" class="glass-card flex items-center gap-4 cursor-pointer border-l-4 border-l-pink-500 bg-pink-500/5 hover:bg-pink-500/10 transition mt-2">
@@ -336,80 +322,6 @@
             </div>
         </section>
 
-        <section id="screen-equipment" class="hidden min-h-screen p-6 pb-20">
-            <div class="flex items-center gap-3 mb-6">
-                <button onclick="navigateTo('screen-dashboard')" class="p-2 rounded-full bg-white/10"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
-                <h2 class="font-bold text-lg">Подключить оборудование</h2>
-            </div>
-            
-            <div class="glass-card mb-4 flex items-center gap-3 p-4 bg-blue-500/10 border-blue-500/30">
-                <i data-lucide="info" class="w-5 h-5 text-blue-300"></i>
-                <p class="text-xs text-gray-300 leading-tight">Подключите ваши носимые устройства для синхронизации данных о пульсе, сне и активности в реальном времени.</p>
-            </div>
-
-            <div class="space-y-3">
-                <div onclick="handleDeviceConnect(this)" class="glass-card flex items-center justify-between cursor-pointer hover:bg-white/5 active:scale-95 transition group" data-status="0">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
-                            <i data-lucide="apple" class="w-6 h-6 text-black fill-black"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-sm">Apple Health</h4>
-                            <p class="text-[10px] text-gray-400 status-text">Нажмите для подключения</p>
-                        </div>
-                    </div>
-                    <div class="status-icon w-8 h-8 rounded-full bg-white/10 flex items-center justify-center transition-all">
-                        <i data-lucide="plus" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                </div>
-
-                <div onclick="handleDeviceConnect(this)" class="glass-card flex items-center justify-between cursor-pointer hover:bg-white/5 active:scale-95 transition group" data-status="0">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center">
-                            <span class="font-bold italic text-white text-[10px]">GARMIN</span>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-sm">Garmin Connect</h4>
-                            <p class="text-[10px] text-gray-400 status-text">Нажмите для подключения</p>
-                        </div>
-                    </div>
-                    <div class="status-icon w-8 h-8 rounded-full bg-white/10 flex items-center justify-center transition-all">
-                        <i data-lucide="plus" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                </div>
-
-                <div onclick="handleDeviceConnect(this)" class="glass-card flex items-center justify-between cursor-pointer hover:bg-white/5 active:scale-95 transition group" data-status="0">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-black border border-white/20 flex items-center justify-center">
-                            <div class="w-4 h-4 rounded-full border-2 border-white"></div>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-sm">Oura Ring</h4>
-                            <p class="text-[10px] text-gray-400 status-text">Нажмите для подключения</p>
-                        </div>
-                    </div>
-                    <div class="status-icon w-8 h-8 rounded-full bg-white/10 flex items-center justify-center transition-all">
-                        <i data-lucide="plus" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                </div>
-
-                <div onclick="handleDeviceConnect(this)" class="glass-card flex items-center justify-between cursor-pointer hover:bg-white/5 active:scale-95 transition group" data-status="0">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-teal-500 flex items-center justify-center">
-                            <span class="font-bold text-white text-[8px] tracking-widest">FITBIT</span>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-sm">Fitbit</h4>
-                            <p class="text-[10px] text-gray-400 status-text">Нажмите для подключения</p>
-                        </div>
-                    </div>
-                    <div class="status-icon w-8 h-8 rounded-full bg-white/10 flex items-center justify-center transition-all">
-                        <i data-lucide="plus" class="w-4 h-4 text-gray-400"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="screen-diary" class="hidden min-h-screen pb-20">
             <div class="sticky top-0 z-20 glass-panel p-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -462,7 +374,7 @@
             <div class="p-4">
                 <div id="detail-content" class="space-y-6 mb-6"></div>
                 
-                <div class="glass-card border border-blue-500/30" id="ai-help-section">
+                <div class="glass-card border border-blue-500/30">
                     <h4 class="font-bold text-sm mb-2 text-blue-300 flex items-center gap-2">
                         <i data-lucide="sparkles" class="w-4 h-4"></i> Gemini AI
                     </h4>
@@ -900,36 +812,37 @@
         }
 
         // --- CATEGORY DATA LOGIC ---
-        // Updated stats to match the request
+        // Updated stats to match the request (Red/Green/Gray badges)
         const categoryList = [
             { id: 'heart', name: 'Сердце', icon: 'heart', stats: { green: 3, red: 1, gray: 2 } },
+            // Stress Moved Here
             { id: 'stress', name: 'Стресс и старение', icon: 'brain-circuit', stats: { green: 0, red: 2, gray: 0 } },
+            // Gender Moved Here
             { id: 'gender', name: 'Муж/Жен здоровье', icon: 'users', stats: { green: 1, red: 2, gray: 7 } },
-            // Pending categories start here (Gray marker: 1)
-            { id: 'onco', name: 'Онкомаркеры', icon: 'microscope', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'thyroid', name: 'Щитовидная железа', icon: 'activity', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'autoimmune', name: 'Аутоиммунитет', icon: 'shield-alert', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'immunity', name: 'Иммунитет', icon: 'shield', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'meta', name: 'Метаболизм', icon: 'zap', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'toxins', name: 'Токсины окр. среды', icon: 'biohazard', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'age', name: 'Биологич. возраст', icon: 'hourglass', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'vitamins', name: 'Витамины', icon: 'pill', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'liver', name: 'Печень', icon: 'activity', stats: { green: 0, red: 0, gray: 1 } }, 
-            { id: 'blood', name: 'Кровь', icon: 'droplet', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'kidney', name: 'Почки', icon: 'activity', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'pancreas', name: 'Поджелудочная', icon: 'activity', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'brain', name: 'Мозг', icon: 'brain', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'elctro', name: 'Электролиты', icon: 'zap', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'allergy', name: 'Аллергия', icon: 'flower', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'sex', name: 'Сексуальное здоровье', icon: 'heart-handshake', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'bones', name: 'Здоровье костей', icon: 'bone', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'infect', name: 'Инфекции', icon: 'bug', stats: { green: 0, red: 0, gray: 1 } },
-            { id: 'mri', name: 'МРТ и КТ', icon: 'scan-line', stats: { green: 0, red: 0, gray: 1 } }
+            // Immunity Moved Here
+            { id: 'immunity', name: 'Иммунитет', icon: 'shield', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'meta', name: 'Метаболизм', icon: 'zap', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'toxins', name: 'Токсины окр. среды', icon: 'biohazard', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'age', name: 'Биологич. возраст', icon: 'hourglass', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'vitamins', name: 'Витамины', icon: 'pill', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'liver', name: 'Печень', icon: 'activity', stats: { green: 0, red: 0, gray: 0 } }, 
+            { id: 'blood', name: 'Кровь', icon: 'droplet', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'kidney', name: 'Почки', icon: 'activity', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'pancreas', name: 'Поджелудочная', icon: 'activity', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'brain', name: 'Мозг', icon: 'brain', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'elctro', name: 'Электролиты', icon: 'zap', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'allergy', name: 'Аллергия', icon: 'flower', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'sex', name: 'Сексуальное здоровье', icon: 'heart-handshake', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'bones', name: 'Здоровье костей', icon: 'bone', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'infect', name: 'Инфекции', icon: 'bug', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'mri', name: 'МРТ и КТ', icon: 'scan-line', stats: { green: 0, red: 0, gray: 0 } }
         ];
 
+        // Specific data only for Heart as requested
         const categoryTestsData = {
             'heart': [
                 { id: 'apo_b', name: "Аполипопротеин В", val: "84 ммоль/л", ref: "< 1.0", status: "norm" }, 
+                // HDL updated to WARN status as requested
                 { id: 'hdl', name: "Холестерол-ЛПВП", val: "50 ммоль/л", ref: "> 1.0", status: "warn" },
                 { id: 'crp', name: "Высокочувствительный С-реактивный белок (кардио)", val: "89 ммоль/л", ref: "< 1.0", status: "norm", desc: "Маркер воспаления сосудов" },
                 { id: 'ldl', name: "Холестерин липопротеидов низкой плотности, прямой метод", val: "111 ммоль/л", ref: "< 3.0", status: "norm" },
@@ -944,6 +857,7 @@
                 { id: 'free_testo', name: "Тестостерон свободный", val: "85 ммоль/л", ref: "> 50", status: "norm" },
                 { id: 'total_testo', name: "Тестостерон (Testosterone)", val: "10 ммоль/л", ref: "> 12", status: "warn" },
                 { id: 'shbg', name: "ГСПГ (SHBG)", val: "10 ммоль/л", ref: "> 13", status: "warn" },
+                // Pending Analysis
                 { id: 'psa_total', name: "PSA общий (Prostate Specific Antigen)", val: "...", ref: "", status: "pending" },
                 { id: 'psa_free', name: "ПСА свободный (f-PSA)", val: "...", ref: "", status: "pending" },
                 { id: 'prolactin', name: "Пролактин (Prolactin, PRL)", val: "...", ref: "", status: "pending" },
@@ -955,8 +869,6 @@
         };
 
         let activeCategoryId = null;
-        // Navigation Flag
-        let fromGlobalPending = false;
 
         function renderCategories() {
             const grid = document.getElementById('categories-grid');
@@ -967,10 +879,33 @@
                 el.className = 'glass-card p-4 flex flex-col justify-between min-h-[100px] cursor-pointer hover:bg-white/5 active:scale-95 transition relative overflow-hidden';
                 el.onclick = () => openCategory(cat.id, cat.name);
                 
+                // Badges HTML generation
                 let badgesHtml = '<div class="flex flex-wrap gap-2 mt-3">';
-                if (cat.stats.green > 0) badgesHtml += `<div class="flex items-center gap-1.5 bg-emerald-500/20 px-2 py-1 rounded text-[10px] text-emerald-300 font-bold border border-emerald-500/10"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> ${cat.stats.green}</div>`;
-                if (cat.stats.red > 0) badgesHtml += `<div class="flex items-center gap-1.5 bg-red-500/20 px-2 py-1 rounded text-[10px] text-red-300 font-bold border border-red-500/10"><div class="w-1.5 h-1.5 rounded-full bg-red-400"></div> ${cat.stats.red}</div>`;
-                if (cat.stats.gray > 0) badgesHtml += `<div class="flex items-center gap-1.5 bg-gray-500/20 px-2 py-1 rounded text-[10px] text-gray-300 font-bold border border-gray-500/10"><div class="w-1.5 h-1.5 rounded-full bg-gray-400"></div> ${cat.stats.gray}</div>`;
+                
+                // Green Badge
+                if (cat.stats.green > 0) {
+                    badgesHtml += `
+                        <div class="flex items-center gap-1.5 bg-emerald-500/20 px-2 py-1 rounded text-[10px] text-emerald-300 font-bold border border-emerald-500/10">
+                            <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> ${cat.stats.green}
+                        </div>
+                    `;
+                }
+                // Red Badge
+                if (cat.stats.red > 0) {
+                      badgesHtml += `
+                        <div class="flex items-center gap-1.5 bg-red-500/20 px-2 py-1 rounded text-[10px] text-red-300 font-bold border border-red-500/10">
+                            <div class="w-1.5 h-1.5 rounded-full bg-red-400"></div> ${cat.stats.red}
+                        </div>
+                    `;
+                }
+                 // Gray Badge
+                if (cat.stats.gray > 0) {
+                      badgesHtml += `
+                        <div class="flex items-center gap-1.5 bg-gray-500/20 px-2 py-1 rounded text-[10px] text-gray-300 font-bold border border-gray-500/10">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-400"></div> ${cat.stats.gray}
+                        </div>
+                    `;
+                }
                 badgesHtml += '</div>';
 
                 el.innerHTML = `
@@ -987,31 +922,32 @@
 
         function openCategory(id, name) {
             activeCategoryId = id;
-            fromGlobalPending = false;
             
-            // Check if this is a "pending" category (not in our specific list)
-            if (id !== 'heart' && id !== 'stress' && id !== 'gender') {
-                showGlobalPending(name);
-                return;
-            }
-
-            // Normal Flow
+            // Hide categories screen, show category view
             document.getElementById('screen-analyses').classList.add('hidden');
             document.getElementById('screen-category-view').classList.remove('hidden');
             document.getElementById('category-title').innerText = name;
             
             const listContainer = document.getElementById('category-tests-list');
             listContainer.innerHTML = '';
+
             const tests = categoryTestsData[id];
             
-            if (!tests) return;
+            if (!tests) {
+                listContainer.innerHTML = '<div class="text-center text-gray-400 mt-10">Анализ в процессе<br></div>';
+                return;
+            }
 
             tests.forEach(t => {
                 const item = document.createElement('div');
                 item.className = 'glass-card p-4 flex justify-between items-center cursor-pointer hover:bg-white/5';
                 item.onclick = () => showTestDetail(t);
+                
+                // Special check for "In Progress" items
                 const isInProgress = (t.status === 'pending' || t.id === 'lpa' || t.id === 'chol_tot');
                 const valDisplay = isInProgress ? '<i data-lucide="hourglass" class="w-3 h-3 text-yellow-400 animate-spin-slow"></i>' : t.val;
+                
+                // --- Highlight HDL as RED if warned ---
                 const isWarn = t.status === 'warn';
                 
                 item.innerHTML = `
@@ -1032,47 +968,318 @@
             lucide.createIcons();
         }
 
-        // --- GLOBAL PENDING VIEW ---
-        function showGlobalPending(name) {
-            document.getElementById('screen-analyses').classList.add('hidden');
-            document.getElementById('screen-analysis-detail').classList.remove('hidden');
-            document.getElementById('detail-title').innerText = name;
-            
-            // Hide AI chat for pending view
-            document.getElementById('ai-help-section').classList.add('hidden');
-            
-            const content = document.getElementById('detail-content');
-            content.innerHTML = `
-                <div class="glass-card p-8 flex flex-col items-center justify-center text-center min-h-[400px] border border-blue-500/30 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-blue-500/5 animate-pulse-glow"></div>
-                    <div class="w-24 h-24 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 animate-spin-slow border border-blue-400/30">
-                        <i data-lucide="loader-2" class="w-10 h-10 text-blue-400"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white mb-2">Анализ в процессе</h2>
-                    <p class="text-sm text-gray-400 max-w-[200px]">Ваши образцы находятся в лаборатории. Мы уведомим вас, когда результаты будут готовы.</p>
-                    <div class="mt-6 px-4 py-2 bg-white/5 rounded-full text-xs font-mono text-blue-300">
-                        Ожидаемое время: 24ч
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
-            fromGlobalPending = true;
-        }
-
         let currentAnalysisContext = "";
 
         function showTestDetail(testData) {
             document.getElementById('screen-category-view').classList.add('hidden');
             document.getElementById('screen-analysis-detail').classList.remove('hidden');
-            document.getElementById('ai-help-section').classList.remove('hidden');
             
             document.getElementById('detail-title').innerText = testData.name;
             const content = document.getElementById('detail-content');
             
-            // Logic to display content (Same as before, shortened for brevity)
-            // ... (Includes previously defined getGraphHTML logic)
-            // If pending:
-             if (testData.status === 'pending' || testData.id === 'lpa' || testData.id === 'chol_tot') {
+            currentAnalysisContext = `Ты врач. Пользователь смотрит результат анализа "${testData.name}". Значение: ${testData.val}. Референс: ${testData.ref}. Статус: ${testData.status === 'norm' ? 'Норма' : 'Отклонение'}. Объясни значение, риски и рекомендации кратко.`;
+            document.getElementById('analysis-chat-output').innerHTML = '';
+
+            // --- REUSABLE GRAPH COMPONENT ---
+            const getGraphHTML = (title, valueStr, desc, diseases, prevVal, currVal, boundaries = null, dates = null) => `
+                <div class="glass-card p-6 relative overflow-hidden">
+                   <div class="flex flex-col gap-6">
+                        <div class="z-10 relative">
+                            <h2 class="text-3xl font-serif-display text-white mb-2">${title}</h2>
+                            <div class="text-xl font-bold text-white mb-4">В норме ${valueStr}</div>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">${desc}</p>
+                            <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                                <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p>
+                                <ul class="text-xs text-gray-300 space-y-1">
+                                    ${diseases.map(d => `<li>• ${d}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2">
+                            <div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4">
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]"></div> В НОРМЕ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> НИЖЕ НОРМЫ</div>
+                            </div>
+                            <div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            <div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            
+                            ${boundaries ? `
+                                <div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">${boundaries[0]}*</div>
+                                <div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">${boundaries[1]}*</div>
+                            ` : ''}
+
+                            <div class="absolute top-[${title.includes('ЛПВП') ? '10%' : '20%'}] right-[35%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-gray-300 mb-1">${prevVal}</span>
+                                 <div class="w-3 h-3 rounded-full border-2 border-orange-400 bg-[#1e1b4b]"></div>
+                                 ${dates ? `<span class="text-[9px] text-white/40 mt-1 font-mono">${dates[0]}</span>` : ''}
+                            </div>
+                            
+                            <div class="absolute top-[50%] right-[10%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-green-400 mb-1">${currVal}</span>
+                                 <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]"></div>
+                                 ${dates ? `<span class="text-[9px] text-white/40 mt-1 font-mono">${dates[1]}</span>` : ''}
+                            </div>
+                            
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                                <line x1="65%" y1="${title.includes('ЛПВП') ? '15%' : '25%'}" x2="90%" y2="55%" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                            </svg>
+                       </div>
+                       <div class="text-[9px] text-gray-500 mt-2 pt-2 border-t border-white/5">
+                           * границы норма в соответствии с данными Министерства здравоохранения РК
+                       </div>
+                   </div>
+                </div>
+            `;
+
+            if (testData.id === 'apo_b') {
+                content.innerHTML = getGraphHTML(
+                    '(ApoB)', '84 ммоль/л', 
+                    'Позволяет напрямую подсчитать количество холестериновых частиц, образующих бляшки, в крови. Это мощный индикатор вредных частиц, которые повышают риск сердечно-сосудистых заболеваний.', 
+                    ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Дислипидемия', 'Метаболический синдром', 'Сахарный диабет 2 типа'],
+                    '93', '84'
+                ) + `
+                    <div class="flex flex-col items-center -mt-6 relative z-0">
+                        <div class="h-8 w-px bg-white/20"></div>
+                    </div>
+                    <div class="glass-card flex items-center gap-4 p-4 border border-orange-400/30">
+                         <div class="p-3 bg-orange-500/20 rounded-xl text-orange-400"><i data-lucide="fish" class="w-6 h-6"></i></div>
+                         <div><h4 class="font-bold text-sm">Омега-3 жирные кислоты</h4><p class="text-xs text-gray-400">Лосось 2 раза в неделю</p></div>
+                    </div>
+                `;
+            } else if (testData.id === 'hdl') {
+                content.innerHTML = getGraphHTML(
+                    'Холестерол-ЛПВП', '50 ммоль/л',
+                    'Показатель полезного холестерина, поддерживающего здоровье сердца. Основная задача — удалять избыток холестерина из крови и транспортировать его в печень для выведения.',
+                    ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Метаболический синдром', 'Ожирение', 'Инсулинорезистентонсть'],
+                    '52', '50', // Vals
+                    ['60', '45'], // Boundaries
+                    ['06.06.2025', '06.12.2025'] // Dates
+                );
+            } else if (testData.id === 'crp') {
+                content.innerHTML = getGraphHTML(
+                    'Высокочувств. CRP', '89 ммоль/л',
+                    'Может выявлять даже небольшое количество воспаления в организме. Хроническое воспаление связано почти со всеми серьезными проблемами со здоровьем.',
+                    ['Хроническое давление', 'Сердечно сосудистые заболевания', 'Метаболический синдром', 'Инфекции', 'Аутоимунное заболевание'],
+                    '88', '89'
+                );
+            } else if (testData.id === 'ldl') {
+                content.innerHTML = getGraphHTML(
+                    'Холестерин ЛПНП', '111 ммоль/л',
+                    'Отвечает за перенос холестерина из печени в клетки по всему организму. Часто называют «плохим» холестерином.',
+                    ['Сердечно сосудистые заболевания', 'Атеросклероз', 'Метаболический синдром', 'Гиперлипидемия', 'Ожирение'],
+                    '120', '111'
+                );
+            } else if (testData.id === 'cortisol') {
+                 // Custom HTML for Cortisol to show HIGH value visually
+                 content.innerHTML = `
+                <div class="glass-card p-6 relative overflow-hidden">
+                   <div class="flex flex-col gap-6">
+                        <div class="z-10 relative">
+                            <h2 class="text-3xl font-serif-display text-white mb-2">Кортизол</h2>
+                            <div class="text-xl font-bold text-red-400 mb-4">Выше нормы 230 ммоль/л</div>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">Часто называют «гормоном стресса», потому что его уровень повышается во время стресса или эмоционального напряжения, помогая организму реагировать и адаптироваться. Как высокий, так и низкий уровень кортизола могут сигнализировать о хроническом стрессе, проблемах со сном или нарушениях работы надпочечников.</p>
+                            <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                                <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p>
+                                <ul class="text-xs text-gray-300 space-y-1">
+                                    <li>• Надпочечниковая недостаточность</li>
+                                    <li>• Синдром Кушинга</li>
+                                    <li>• Хронический стресс (повышенный уровень картизола)</li>
+                                    <li>• Гиперплазия надпочечников</li>
+                                    <li>• Заболевание гипофиза</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2">
+                            <div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4">
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"></div> ВЫШЕ НОРМЫ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> В НОРМЕ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> НИЖЕ НОРМЫ</div>
+                            </div>
+                            <div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            <div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            
+                            <div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">200*</div>
+                            <div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">100*</div>
+
+                            <div class="absolute top-[50%] right-[35%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-gray-300 mb-1">180</span>
+                                 <div class="w-3 h-3 rounded-full border-2 border-gray-400 bg-[#1e1b4b]"></div>
+                                 <span class="text-[9px] text-white/40 mt-1 font-mono">20.12.2025</span>
+                            </div>
+                            
+                            <div class="absolute top-[15%] right-[10%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-red-400 mb-1">230</span>
+                                 <div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse"></div>
+                                 <span class="text-[9px] text-white/40 mt-1 font-mono">20.01.2026</span>
+                            </div>
+                            
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                                <line x1="65%" y1="50%" x2="90%" y2="15%" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-dasharray="4" />
+                            </svg>
+                       </div>
+                   </div>
+                </div>`;
+            } else if (testData.id === 'dhea') {
+                 // Custom HTML for DHEA to show LOW value visually
+                 content.innerHTML = `
+                <div class="glass-card p-6 relative overflow-hidden">
+                   <div class="flex flex-col gap-6">
+                        <div class="z-10 relative">
+                            <h2 class="text-3xl font-serif-display text-white mb-2">ДЭА-S04</h2>
+                            <div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 30 ммоль/л</div>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">У женщин ДГЭА-С служит строительным блоком для других гормонов, включая эстроген и тестостерон, и дает ценную информацию о репродуктивной функции, здоровье надпочечников и общем гормональном балансе. У мужчин ДГЭА-С действует в основном как предшественник андрогенов (мужских репродуктивных гормонов), таких как тестостерон, поддерживая репродуктивное здоровье, энергетический обмен и общее гормональное равновесие. Связан с аспектами здоровья иммунной системы, долголетия и здорового старения</p>
+                            <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                                <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p>
+                                <ul class="text-xs text-gray-300 space-y-1">
+                                    <li>• Усталость</li>
+                                    <li>• Нерегулярный менструальный цикл</li>
+                                    <li>• Источение или выпадение волос</li>
+                                    <li>• Акне</li>
+                                    <li>• Изменение настроения</li>
+                                    <li>• Гормональный дисбаланс</li>
+                                    <li>• Хронический стресс</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2">
+                            <div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4">
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> В НОРМЕ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"></div> НИЖЕ НОРМЫ</div>
+                            </div>
+                            <div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            <div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            
+                            <div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">100*</div>
+                            <div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">50*</div>
+
+                            <div class="absolute top-[50%] right-[35%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-gray-300 mb-1">60</span>
+                                 <div class="w-3 h-3 rounded-full border-2 border-gray-400 bg-[#1e1b4b]"></div>
+                                 <span class="text-[9px] text-white/40 mt-1 font-mono">20.12.2025</span>
+                            </div>
+                            
+                            <div class="absolute top-[85%] right-[10%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-red-400 mb-1">30</span>
+                                 <div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse"></div>
+                                 <span class="text-[9px] text-white/40 mt-1 font-mono">20.01.2026</span>
+                            </div>
+                            
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                                <line x1="65%" y1="50%" x2="90%" y2="85%" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-dasharray="4" />
+                            </svg>
+                       </div>
+                   </div>
+                </div>`;
+            } else if (testData.id === 'free_testo') {
+                content.innerHTML = getGraphHTML(
+                    'Тестостерон свободный', '85 ммоль/л',
+                    'Это биологически активная форма тестостерона, влияющая на либидо, мышечную массу, уровень энергии и общую жизненную силу. Поскольку он измеряет количество несвязанного тестостерона, доступного для использования организмом, он дает более четкое представление о функции гормонов и может быть особенно полезен при оценке низкого уровня тестостерона или гипогонадизма у мужчин.',
+                    ['Гипогонадизм', 'Метаболическая дисфункция', 'Дислипидемия', 'Ожирение', 'Дисфункция гипофиза'],
+                    '80', '85', ['100', '50']
+                );
+            } else if (testData.id === 'total_testo') {
+                 // TOTAL TESTOSTERONE - LOW
+                 content.innerHTML = `
+                <div class="glass-card p-6 relative overflow-hidden">
+                   <div class="flex flex-col gap-6">
+                        <div class="z-10 relative">
+                            <h2 class="text-3xl font-serif-display text-white mb-2">Тестостерон</h2>
+                            <div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 10 ммоль/л</div>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">Измеряет количество всего циркулирующего в крови тестостерона — как связанного, так и свободного. Он играет ключевую роль в сексуальном, когнитивном и физическом здоровье, и его уровень естественным образом снижается с возрастом. Регулярное тестирование может помочь выявить аномальное снижение уровня тестостерона с возрастом и способствовать разработке индивидуальных программ лечения, что делает его важным маркером для долгосрочного здоровья мужчин и профилактики заболеваний</p>
+                            <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                                <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p>
+                                <ul class="text-xs text-gray-300 space-y-1">
+                                    <li>• Гипогонадизм</li>
+                                    <li>• Метаболическая дисфункция</li>
+                                    <li>• Дислипидемия</li>
+                                    <li>• Ожирение</li>
+                                    <li>• Дисфункция гипофиза</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2">
+                            <div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4">
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> В НОРМЕ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"></div> НИЖЕ НОРМЫ</div>
+                            </div>
+                            <div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            <div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            
+                            <div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">35*</div>
+                            <div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">12*</div>
+
+                            <div class="absolute top-[50%] right-[35%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-gray-300 mb-1">15</span>
+                                 <div class="w-3 h-3 rounded-full border-2 border-gray-400 bg-[#1e1b4b]"></div>
+                                 <span class="text-[9px] text-white/40 mt-1 font-mono">20.12.2025</span>
+                            </div>
+                            
+                            <div class="absolute top-[80%] right-[10%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-red-400 mb-1">10</span>
+                                 <div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse"></div>
+                                 <span class="text-[9px] text-white/40 mt-1 font-mono">20.01.2026</span>
+                            </div>
+                            
+                             <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                                <line x1="65%" y1="50%" x2="90%" y2="80%" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-dasharray="4" />
+                            </svg>
+                       </div>
+                   </div>
+                </div>`;
+            } else if (testData.id === 'shbg') {
+                // SHBG - LOW
+                 content.innerHTML = `
+                <div class="glass-card p-6 relative overflow-hidden">
+                   <div class="flex flex-col gap-6">
+                        <div class="z-10 relative">
+                            <h2 class="text-3xl font-serif-display text-white mb-2">ГСПГ (SHBG)</h2>
+                            <div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 10 ммоль/л</div>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">это белок, который связывается с тестостероном и другими половыми гормонами, контролируя их доступность в организме. Высокий уровень SHBG может снизить количество свободного тестостерона, что приводит к таким симптомам, как снижение либидо и усталость, в то время как низкий уровень SHBG может способствовать избытку свободного тестостерона или гормональному дисбалансу.</p>
+                            <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                                <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p>
+                                <ul class="text-xs text-gray-300 space-y-1">
+                                    <li>• Гипогонадизм</li>
+                                    <li>• Нарушение функции печени</li>
+                                    <li>• Дисфункция щитовидной железы</li>
+                                    <li>• Ожирение</li>
+                                    <li>• Инсулинорезистентность</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2">
+                            <div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4">
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> В НОРМЕ</div>
+                                 <div class="flex items-center gap-2"><div class="h-6 w-1 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"></div> НИЖЕ НОРМЫ</div>
+                            </div>
+                            <div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            <div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                            
+                            <div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">71*</div>
+                            <div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">13*</div>
+
+                            <div class="absolute top-[50%] right-[35%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-gray-300 mb-1">18</span>
+                                 <div class="w-3 h-3 rounded-full border-2 border-gray-400 bg-[#1e1b4b]"></div>
+                                 <span class="text-[9px] text-white/40 mt-1 font-mono">20.12.2025</span>
+                            </div>
+                            
+                            <div class="absolute top-[80%] right-[10%] flex flex-col items-center z-10">
+                                 <span class="text-xs font-bold text-red-400 mb-1">10</span>
+                                 <div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse"></div>
+                                 <span class="text-[9px] text-white/40 mt-1 font-mono">20.01.2026</span>
+                            </div>
+                            
+                             <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                                <line x1="65%" y1="50%" x2="90%" y2="80%" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-dasharray="4" />
+                            </svg>
+                       </div>
+                   </div>
+                </div>`;
+            } else if (testData.status === 'pending' || testData.id === 'lpa' || testData.id === 'chol_tot') {
                 content.innerHTML = `
                     <div class="glass-card p-8 flex flex-col items-center justify-center text-center min-h-[300px] border border-blue-500/30 relative overflow-hidden">
                         <div class="absolute inset-0 bg-blue-500/5 animate-pulse-glow"></div>
@@ -1086,44 +1293,13 @@
                         </div>
                     </div>
                 `;
-            } else {
-                 // Reuse previous detailed logic...
-                 // Note: Since I can't repeat the massive block of code from the previous prompt without exceeding limits, 
-                 // I am assuming the full implementation from the previous step is retained here. 
-                 // I will inject a simplified placeholder for the non-pending "detail view" logic 
-                 // BUT in the real file you would keep the full switch/case logic.
-                 
-                 // FOR THIS RESPONSE: Since I am focusing on the "In Process" change, 
-                 // I will re-inject the specific graphs only for the ones we defined to ensure they work.
-                 
-                 // [Logic from previous prompt regarding Heart/Stress/Gender graphs goes here]
-                 // Since I cannot paste 500 lines, I will invoke a helper that would contain that logic.
-                 renderSpecificGraph(content, testData);
             }
             lucide.createIcons();
-        }
-        
-        // Helper to render graphs (simplified for this context to show it works)
-        function renderSpecificGraph(container, testData) {
-            // This is where the massive switch case from previous prompt exists.
-            // For now, I'll just render a basic card so the code is valid.
-             container.innerHTML = `
-                <div class="glass-card p-6">
-                    <h2 class="text-2xl font-bold mb-2">${testData.val}</h2>
-                    <p class="text-gray-400 text-sm">График отображается здесь (Код сохранен из предыдущего шага)</p>
-                </div>
-            `;
-             // In real use, paste the full switch/case block here.
         }
 
         function backToCategory() {
             document.getElementById('screen-analysis-detail').classList.add('hidden');
-            if (fromGlobalPending) {
-                document.getElementById('screen-analyses').classList.remove('hidden');
-                fromGlobalPending = false;
-            } else {
-                document.getElementById('screen-category-view').classList.remove('hidden');
-            }
+            document.getElementById('screen-category-view').classList.remove('hidden');
         }
 
         function sendAnalysisQuestion() {
@@ -1131,34 +1307,71 @@
             sendGemini('analysis-chat-input', 'analysis-chat-output', currentAnalysisContext);
         }
 
-        // --- DEVICE CONNECTION LOGIC ---
-        function handleDeviceConnect(element) {
-            const status = element.getAttribute('data-status');
-            const statusText = element.querySelector('.status-text');
-            const statusIcon = element.querySelector('.status-icon');
+        // --- WORKOUTS LOGIC ---
+        function showWorkoutDetail(type) {
+            navigateTo('screen-workout-detail');
+            const title = document.getElementById('wo-detail-title');
+            const content = document.getElementById('wo-detail-content');
             
-            if (status === "0") {
-                // Searching State
-                element.setAttribute('data-status', "1");
-                statusText.innerText = "Поиск устройства...";
-                statusIcon.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 text-blue-400 connecting-spin"></i>';
-                lucide.createIcons();
-                
-                // Simulate Connection
-                setTimeout(() => {
-                    element.setAttribute('data-status', "2");
-                    statusText.innerText = "Подключено";
-                    statusText.className = "text-[10px] text-green-400 font-bold status-text";
-                    statusIcon.className = "status-icon w-8 h-8 rounded-full bg-green-500 flex items-center justify-center transition-all shadow-[0_0_10px_#22c55e]";
-                    statusIcon.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-white"></i>';
-                    lucide.createIcons();
-                }, 2000);
+            if (type === 'cardio') {
+                title.innerText = "Кардио Программа";
+                content.innerHTML = `
+                    <div class="glass-card mb-4"><p>Эта программа направлена на укрепление сердечно-сосудистой системы и сжигание жира.</p></div>
+                    <div class="glass-card border-l-4 border-l-orange-400">
+                        <h4 class="font-bold">1. Разминка (5 мин)</h4>
+                        <p class="text-xs text-gray-400">Легкий бег на месте, вращение суставов.</p>
+                    </div>
+                    <div class="glass-card border-l-4 border-l-orange-400">
+                        <h4 class="font-bold">2. Интервальный бег (20 мин)</h4>
+                        <p class="text-xs text-gray-400">1 мин ускорение / 2 мин ходьба.</p>
+                    </div>
+                    <div class="glass-card border-l-4 border-l-orange-400">
+                        <h4 class="font-bold">3. Берпи (3 подхода)</h4>
+                        <p class="text-xs text-gray-400">10 повторений, отдых 30 сек.</p>
+                    </div>
+                     <button class="btn-primary mt-4">Приступить</button>
+                `;
+            } else if (type === 'gym') {
+                title.innerText = "Силовая (Зал)";
+                content.innerHTML = `
+                    <div class="glass-card mb-4"><p>Базовая программа на все тело (Full Body).</p></div>
+                    <div class="glass-card border-l-4 border-l-blue-400">
+                        <h4 class="font-bold">1. Жим лежа</h4>
+                        <p class="text-xs text-gray-400">3 подхода по 10 раз.</p>
+                    </div>
+                    <div class="glass-card border-l-4 border-l-blue-400">
+                        <h4 class="font-bold">2. Приседания со штангой</h4>
+                        <p class="text-xs text-gray-400">3 подхода по 12 раз.</p>
+                    </div>
+                     <button class="btn-primary mt-4">Приступить</button>
+                `;
+            } else if (type === 'yoga') {
+                title.innerText = "Йога";
+                content.innerHTML = `
+                    <div class="glass-card mb-4"><p>Комплекс Сурья Намаскар (Приветствие солнцу).</p></div>
+                    <div class="glass-card border-l-4 border-l-purple-400"><h4 class="font-bold">1. Поза горы</h4></div>
+                    <div class="glass-card border-l-4 border-l-purple-400"><h4 class="font-bold">2. Наклон вперед</h4></div>
+                     <button class="btn-primary mt-4">Приступить</button>
+                `;
+            } else if (type === 'morning') {
+                title.innerText = "Утренний Тонус";
+                content.innerHTML = `
+                    <div class="glass-card mb-4"><p>Зарядка для пробуждения организма.</p></div>
+                    <div class="glass-card border-l-4 border-l-teal-400"><h4 class="font-bold">1. Прыжки на месте (30 сек)</h4></div>
+                    <div class="glass-card border-l-4 border-l-teal-400"><h4 class="font-bold">2. Отжимания (15 раз)</h4></div>
+                    <div class="glass-card border-l-4 border-l-teal-400"><h4 class="font-bold">3. Планка (45 сек)</h4></div>
+                     <button class="btn-primary mt-4">Начать</button>
+                `;
             }
         }
-        
-        // Include previous workout/lab logic...
-         function showWorkoutDetail(type) { navigateTo('screen-workout-detail'); document.getElementById('wo-detail-content').innerHTML = '<div class="glass-card p-4">Детали тренировки...</div>'; }
-         function bookLab() { const toast = document.getElementById('toast'); toast.innerText = "Вы успешно записаны!"; toast.className = "show"; setTimeout(() => { toast.className = ""; }, 3000); }
+
+        // --- LAB BOOKING ---
+        function bookLab() {
+            const toast = document.getElementById('toast');
+            toast.innerText = "Вы успешно записаны! Вся информация сохранена в разделе «Здоровье».";
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
 
     </script>
 </body>
