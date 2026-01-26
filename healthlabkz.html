@@ -353,8 +353,8 @@
                         <i data-lucide="calendar" class="w-5 h-5 text-purple-400"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg leading-none mb-1">Календарь</h3>
-                        <p class="text-[10px] text-gray-400 uppercase">Предстоящие</p>
+                        <h3 class="text-lg leading-none mb-1">Предстоящие анализы</h3>
+                        <p class="text-[10px] text-gray-400 uppercase">Зыберите лабораторию</p>
                     </div>
                 </div>
             </div>
@@ -1128,7 +1128,7 @@
 
             const tests = categoryTestsData[id] || [];
             if(tests.length === 0) {
-                 listContainer.innerHTML = '<div class="text-center text-gray-500 mt-10">Нет данных</div>';
+                 listContainer.innerHTML = '<div class="text-center text-gray-500 mt-10">Ваши образцы находяться в лаборатории, мы уведомим вас, когда результаты будут готовы</div>';
                  return;
             }
 
