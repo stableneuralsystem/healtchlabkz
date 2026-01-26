@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HEALTCH LAB KZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- PREMIUM THEME 2026 --- */
+        :root {
+            --bg-deep: #050507;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #1a1d3d 0%, #050507 80%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-muted: #8b9bb4;
+            
+            --primary-color: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.6);
+            --accent-teal: #2dd4bf;
+            --accent-purple: #a855f7;
+            
+            --font-main: 'Oswald', sans-serif;
+            --nav-height: 80px;
+        }
+
+        /* Светлая тема (Luxury White) */
+        [data-theme="white"] {
+            --bg-deep: #f8fafc;
+            --bg-gradient: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+            --glass-highlight: rgba(0, 0, 0, 0.02);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary-color: #0f172a;
+            --primary-glow: rgba(15, 23, 42, 0.2);
+        }
+        
+        /* Onyx Theme (Noir) */
+        [data-theme="onyx"] {
+            --bg-deep: #000000;
+            --bg-gradient: #000000;
+            --glass-bg: rgba(20, 20, 20, 0.6);
+            --glass-border: 1px solid rgba(50, 50, 50, 0.5);
+            --text-main: #e5e5e5;
+            --text-muted: #737373;
+            --primary-color: #ffffff;
+            --primary-glow: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            padding-bottom: var(--nav-height);
+            letter-spacing: 0.5px;
+        }
+
+        /* Анимированный фон для входа */
+        .premium-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-deep);
+            z-index: -1;
+            overflow: hidden;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatOrb 10s infinite ease-in-out;
+        }
+        .orb-1 { width: 300px; height: 300px; background: #4f46e5; top: -50px; left: -50px; animation-delay: 0s; }
+        .orb-2 { width: 250px; height: 250px; background: #a855f7; bottom: 10%; right: -50px; animation-delay: -2s; }
+        .orb-3 { width: 200px; height: 200px; background: #2dd4bf; top: 40%; left: 30%; animation-delay: -5s; opacity: 0.2; }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        /* --- GLASS & CARDS --- */
+        .glass-panel {
+            background: rgba(10, 10, 15, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: var(--glass-border);
+        }
+        
+        .glass-header {
+            background: rgba(10, 10, 15, 0.4);
+            backdrop-filter: blur(12px);
+            border-bottom: var(--glass-border);
+            z-index: 50;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+        .glass-card:active { transform: scale(0.98); }
+
+        /* --- TYPOGRAPHY & INPUTS --- */
+        h1, h2, h3, h4, h5 { font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        p, span, div { font-weight: 300; }
+        .font-serif-display { font-family: 'Times New Roman', serif; letter-spacing: 0; }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+            padding: 18px 20px;
+            border-radius: 16px 16px 0 0;
+            width: 100%;
+            outline: none;
+            font-family: var(--font-main);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-bottom-color: var(--accent-teal);
+        }
+        [data-theme="white"] .glass-input { background: #f1f5f9; color: #000; border-bottom: 1px solid #cbd5e1; }
+
+        /* --- BUTTONS --- */
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 18px;
+            border-radius: 16px;
+            width: 100%;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -10px var(--primary-glow);
+            transition: all 0.3s;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-primary:active { transform: scale(0.96); box-shadow: 0 5px 15px -5px var(--primary-glow); }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            padding: 14px;
+            border-radius: 12px;
+            width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .btn-float {
+            background: #ffffff;
+            color: #000;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            font-family: var(--font-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-btn {
+            opacity: 0.5;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        .nav-btn i { stroke-width: 1.5px; transition: 0.3s; }
+        .nav-btn span { font-size: 10px; margin-top: 4px; letter-spacing: 0.5px; font-weight: 400; }
+        .nav-btn.active { opacity: 1; color: var(--text-main); transform: translateY(-5px); }
+        .nav-btn.active i { stroke: var(--accent-teal); stroke-width: 2.5px; filter: drop-shadow(0 0 8px var(--accent-teal)); }
+
+        /* --- UTILS --- */
+        .text-gradient { background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .text-gradient-primary { background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        
+        /* Fixes for white theme text visibility */
+        [data-theme="white"] h1, [data-theme="white"] h2, [data-theme="white"] h3 { color: #0f172a; }
+        [data-theme="white"] p, [data-theme="white"] span, [data-theme="white"] div { color: #334155; }
+        [data-theme="white"] .text-white { color: #fff !important; } /* For buttons */
+        [data-theme="white"] .glass-card h4 { color: #1e293b; }
+        [data-theme="white"] .text-gray-400 { color: #94a3b8; }
+        
+        /* Toast */
+        #toast {
+            visibility: hidden;
+            background: rgba(16, 185, 129, 0.9);
+            color: #fff;
+            text-align: center;
+            border-radius: 50px;
+            padding: 12px 24px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 100px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            letter-spacing: 0.5px;
+        }
+        #toast.show { visibility: visible; animation: fadeIn 0.5s, fadeOut 0.5s 2.5s; }
+        @keyframes fadeOut { from {bottom: 100px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        /* Switch */
+        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 34px; border: 1px solid rgba(255,255,255,0.1); }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: var(--accent-teal); border-color: var(--accent-teal); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="premium-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div id="toast"></div>
+
+    <div id="app" class="max-w-md mx-auto min-h-screen relative">
+        
+        <section id="screen-welcome" class="flex flex-col justify-center min-h-screen p-8 animate-fade-in relative z-10">
+            <div class="mb-12 text-center relative">
+                <div class="absolute inset-0 bg-blue-500 blur-[80px] opacity-20"></div>
+                <h1 class="text-6xl font-bold text-gradient mb-2 leading-none tracking-tighter">
+                    HEALTCH<br>
+                    <span class="text-gradient-primary">LAB KZ</span>
+                </h1>
+                <div class="h-1 w-20 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mt-4 mb-4"></div>
+                <p class="text-muted text-sm uppercase tracking-widest">Premium Health Monitoring</p>
+            </div>
+            
+            <div class="space-y-6 glass-card border-none bg-black/20">
+                <div class="space-y-1">
+                    <label class="text-xs uppercase text-gray-400 font-bold ml-1">Email</label>
+                    <input type="email" id="login-email" class="glass-input" placeholder="Введите ваш email" value="admin@gmail.com">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs uppercase text-gray-400 font-bold ml-1">Пароль</label>
+                    <input type="password" id="login-pass" class="glass-input" placeholder="••••••••" value="admin123">
+                </div>
+                
+                <button onclick="handleLogin()" class="btn-primary mt-6 shadow-lg shadow-blue-900/50">
+                    Войти в систему
+                </button>
+                
+                <button onclick="alert('Регистрация временно закрыта')" class="w-full text-center text-sm text-gray-400 hover:text-white transition uppercase tracking-wider text-[10px] mt-2">
+                    Создать новый аккаунт
+                </button>
+            </div>
+            
+            <p class="text-center text-[10px] text-gray-600 mt-8 uppercase tracking-widest">v2.0.4 Premium Build</p>
+        </section>
+
+        <div id="bottom-nav" class="hidden fixed bottom-0 left-0 right-0 glass-panel z-50 max-w-md mx-auto rounded-t-3xl border-t border-white/10">
+            <div class="flex justify-around items-center p-3 pb-6 font-medium">
+                <button onclick="switchTab('screen-analyses', this)" class="nav-btn flex flex-col items-center gap-1 active" id="default-tab-btn">
+                    <i data-lucide="flask-conical" class="w-6 h-6"></i>
+                    <span>Анализы</span>
+                </button>
+                <button onclick="switchTab('screen-health', this)" class="nav-btn flex flex-col items-center gap-1">
+                    <i data-lucide="activity" class="w-6 h-6"></i>
+                    <span>Здоровье</span>
+                </button>
+                 <button onclick="switchTab('screen-workouts', this)" class="nav-btn flex flex-col items-center gap-1">
+                    <i data-lucide="dumbbell" class="w-6 h-6"></i>
+                    <span>Спорт</span>
+                </button>
+                 <button onclick="switchTab('screen-nutrition', this)" class="nav-btn flex flex-col items-center gap-1">
+                    <i data-lucide="utensils" class="w-6 h-6"></i>
+                    <span>Питание</span>
+                </button>
+                <button onclick="switchTab('screen-settings', this)" class="nav-btn flex flex-col items-center gap-1">
+                    <i data-lucide="user" class="w-6 h-6"></i>
+                    <span>Профиль</span>
+                </button>
+            </div>
+        </div>
+
+        <section id="screen-analyses" class="hidden min-h-screen p-5 pb-28 animate-fade-in">
+            <div class="flex justify-between items-end mb-8 mt-4">
+                <div>
+                    <p class="text-xs text-accent-teal uppercase tracking-widest mb-1 font-bold">Добро пожаловать</p>
+                    <h2 class="text-3xl text-white font-normal">ADMIN</h2>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg ring-2 ring-white/10 text-xl">A</div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                 <div onclick="navigateTo('screen-laboratories')" class="glass-card p-4 flex flex-col justify-between min-h-[120px] cursor-pointer group bg-gradient-to-br from-blue-900/20 to-transparent border-blue-500/20">
+                    <div class="bg-blue-500/20 w-10 h-10 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-blue-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg leading-none mb-1">Лаборатории</h3>
+                        <p class="text-[10px] text-gray-400 uppercase">Запись на прием</p>
+                    </div>
+                </div>
+                 <div onclick="navigateTo('screen-upcoming')" class="glass-card p-4 flex flex-col justify-between min-h-[120px] cursor-pointer group bg-gradient-to-br from-purple-900/20 to-transparent border-purple-500/20">
+                    <div class="bg-purple-500/20 w-10 h-10 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                        <i data-lucide="calendar" class="w-5 h-5 text-purple-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg leading-none mb-1">Календарь</h3>
+                        <p class="text-[10px] text-gray-400 uppercase">Предстоящие</p>
+                    </div>
+                </div>
+            </div>
+
+            <div onclick="navigateTo('screen-voice-analysis')" class="glass-card mb-8 flex items-center justify-between p-5 cursor-pointer bg-gradient-to-r from-teal-900/30 to-blue-900/10 border-teal-500/20">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-teal-400 blur-lg opacity-40 animate-pulse"></div>
+                        <i data-lucide="mic" class="relative z-10 w-6 h-6 text-teal-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl">AI Ассистент</h3>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider">Голосовой разбор</p>
+                    </div>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-white/70"></i>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4 mb-6">
+                <h2 class="text-xl font-bold text-white">БИОМАРКЕРЫ</h2>
+                <div class="h-px flex-1 bg-white/10"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-3" id="categories-grid">
+                </div>
+        </section>
+
+        <section id="screen-settings" class="hidden min-h-screen p-5 pb-28 animate-fade-in">
+            <h2 class="text-2xl mb-8 mt-4">Настройки</h2>
+            
+            <div class="mb-10">
+                <h3 class="text-xs text-accent-teal uppercase font-bold tracking-widest mb-4 pl-1">Визуальный стиль</h3>
+                <div class="space-y-3">
+                    <div onclick="applyTheme('default')" class="glass-card theme-card active-theme flex items-center gap-4 p-4 cursor-pointer" id="theme-default">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0f172a] to-[#1e1b4b] border border-white/20 shadow-lg"></div>
+                        <div class="flex-1">
+                            <h4 class="text-lg">Deep Space</h4>
+                            <p class="text-xs text-gray-400 uppercase">Premium Dark</p>
+                        </div>
+                        <div class="check-icon hidden text-blue-500"><i data-lucide="check" class="w-6 h-6"></i></div>
+                    </div>
+                    <div onclick="applyTheme('white')" class="glass-card theme-card flex items-center gap-4 p-4 cursor-pointer" id="theme-white">
+                        <div class="w-12 h-12 rounded-xl bg-white border border-gray-200 shadow-lg"></div>
+                        <div class="flex-1">
+                            <h4 class="text-lg">Pure White</h4>
+                            <p class="text-xs text-gray-400 uppercase">Clean Light</p>
+                        </div>
+                         <div class="check-icon hidden text-blue-500"><i data-lucide="check" class="w-6 h-6"></i></div>
+                    </div>
+                    <div onclick="applyTheme('onyx')" class="glass-card theme-card flex items-center gap-4 p-4 cursor-pointer" id="theme-onyx">
+                        <div class="w-12 h-12 rounded-xl bg-black border border-gray-800 shadow-lg"></div>
+                        <div class="flex-1">
+                            <h4 class="text-lg">Onyx Mono</h4>
+                            <p class="text-xs text-gray-400 uppercase">High Contrast</p>
+                        </div>
+                         <div class="check-icon hidden text-blue-500"><i data-lucide="check" class="w-6 h-6"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xs text-accent-teal uppercase font-bold tracking-widest mb-4 pl-1">Интеграции</h3>
+                <div onclick="navigateTo('screen-devices')" class="glass-card flex items-center justify-between p-5 cursor-pointer hover:bg-white/5 transition border-l-4 border-l-green-500">
+                    <div class="flex items-center gap-4">
+                        <div class="p-3 bg-green-500/10 rounded-full text-green-400">
+                            <i data-lucide="watch" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg">Устройства</h3>
+                            <p class="text-xs text-gray-400 uppercase">Apple Health, Garmin</p>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500"></i>
+                </div>
+            </div>
+            
+             <div class="mt-12 text-center opacity-30">
+                <h1 class="text-4xl font-bold tracking-tighter">HEALTCH LAB</h1>
+                <span class="text-[10px] font-mono">BUILD 2.0.4 BETA</span>
+            </div>
+        </section>
+
+        <section id="screen-health" class="hidden min-h-screen p-5 pb-28 animate-fade-in">
+             <div class="flex items-center justify-between mb-8 mt-4">
+                <h2 class="text-2xl">Показатели</h2>
+                 <div class="flex items-center gap-2 px-3 py-1 bg-green-500/10 rounded-full border border-green-500/20">
+                     <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]"></div>
+                     <span class="text-[10px] text-green-300 font-bold uppercase tracking-wider">Live Sync</span>
+                 </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="glass-card p-8 flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-red-900/10 to-transparent border-red-500/20">
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                    <div class="relative z-10">
+                         <div class="text-red-500 animate-pulse drop-shadow-[0_0_15px_rgba(239,68,68,0.6)] mb-4 flex justify-center">
+                             <i data-lucide="heart" class="w-16 h-16 fill-current"></i>
+                         </div>
+                         <div class="text-center">
+                             <span id="health-bpm" class="text-7xl font-bold text-white tracking-tighter">58</span>
+                             <p class="text-xs text-red-300 uppercase tracking-[0.2em] mt-1">BPM / Мин</p>
+                         </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 flex items-center justify-between">
+                    <div>
+                         <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Активность</p>
+                         <h3 class="text-4xl font-bold text-white">5,600</h3>
+                         <div class="mt-2 h-1 w-24 bg-gray-700 rounded-full overflow-hidden">
+                             <div class="h-full bg-accent-teal w-[60%] shadow-[0_0_10px_#2dd4bf]"></div>
+                         </div>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-accent-teal/10 flex items-center justify-center text-accent-teal border border-accent-teal/20">
+                        <i data-lucide="footprints" class="w-6 h-6"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass-card p-5">
+                        <div class="flex items-center gap-2 mb-3 text-purple-400"><i data-lucide="moon" class="w-4 h-4"></i> <span class="text-[10px] uppercase font-bold">Сон</span></div>
+                        <h3 class="text-3xl font-bold">7.5 <span class="text-sm text-gray-500 font-normal">Ч</span></h3>
+                    </div>
+                      <div class="glass-card p-5">
+                        <div class="flex items-center gap-2 mb-3 text-blue-400"><i data-lucide="droplet" class="w-4 h-4"></i> <span class="text-[10px] uppercase font-bold">Вода</span></div>
+                        <h3 class="text-3xl font-bold">1.8 <span class="text-sm text-gray-500 font-normal">Л</span></h3>
+                    </div>
+                      <div class="glass-card p-5">
+                        <div class="flex items-center gap-2 mb-3 text-orange-400"><i data-lucide="flame" class="w-4 h-4"></i> <span class="text-[10px] uppercase font-bold">Ккал</span></div>
+                        <h3 class="text-3xl font-bold">420</h3>
+                    </div>
+                      <div class="glass-card p-5">
+                        <div class="flex items-center gap-2 mb-3 text-green-400"><i data-lucide="zap" class="w-4 h-4"></i> <span class="text-[10px] uppercase font-bold">Энергия</span></div>
+                        <h3 class="text-3xl font-bold">78%</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-workouts" class="hidden min-h-screen p-5 pb-28 animate-fade-in">
+            <h2 class="text-2xl mb-8 mt-4">Тренировки</h2>
+
+            <div class="mb-10">
+                <h3 class="text-xs text-accent-teal uppercase font-bold tracking-widest mb-4 pl-1">Активная программа</h3>
+                <div onclick="showWorkoutDetail('morning')" class="glass-card relative overflow-hidden group cursor-pointer border-none">
+                    <div class="absolute inset-0 bg-gradient-to-r from-teal-900 to-black opacity-80 z-0"></div>
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center opacity-40 mix-blend-overlay transition group-hover:scale-105 duration-700"></div>
+                    
+                    <div class="relative z-10 flex justify-between items-center p-2">
+                        <div>
+                            <h4 class="text-2xl text-white font-bold mb-1">Утренний Тонус</h4>
+                            <div class="flex gap-2">
+                                <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded text-white backdrop-blur-sm">15 МИН</span>
+                                <span class="text-[10px] bg-teal-500/80 px-2 py-0.5 rounded text-white backdrop-blur-sm">ЛЕГКАЯ</span>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-teal-500 transition">
+                            <i data-lucide="play" class="w-4 h-4 text-white fill-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xs text-accent-teal uppercase font-bold tracking-widest mb-4 pl-1">Каталог</h3>
+                <div class="space-y-3">
+                    <div onclick="showWorkoutDetail('cardio')" class="glass-card flex items-center gap-5 cursor-pointer hover:bg-white/5 transition p-4">
+                        <div class="bg-orange-500/10 p-3 rounded-xl border border-orange-500/20"><i data-lucide="activity" class="text-orange-400 w-6 h-6"></i></div>
+                        <div class="flex-1">
+                            <h4 class="text-lg">Кардио</h4>
+                            <p class="text-xs text-gray-400 uppercase tracking-wider">Выносливость и жиросжигание</p>
+                        </div>
+                    </div>
+                    <div onclick="showWorkoutDetail('gym')" class="glass-card flex items-center gap-5 cursor-pointer hover:bg-white/5 transition p-4">
+                        <div class="bg-blue-500/10 p-3 rounded-xl border border-blue-500/20"><i data-lucide="dumbbell" class="text-blue-400 w-6 h-6"></i></div>
+                         <div class="flex-1">
+                            <h4 class="text-lg">Силовые</h4>
+                            <p class="text-xs text-gray-400 uppercase tracking-wider">Тренажерный зал</p>
+                        </div>
+                    </div>
+                    <div onclick="showWorkoutDetail('yoga')" class="glass-card flex items-center gap-5 cursor-pointer hover:bg-white/5 transition p-4">
+                        <div class="bg-purple-500/10 p-3 rounded-xl border border-purple-500/20"><i data-lucide="flower-2" class="text-purple-400 w-6 h-6"></i></div>
+                         <div class="flex-1">
+                            <h4 class="text-lg">Йога</h4>
+                            <p class="text-xs text-gray-400 uppercase tracking-wider">Гибкость и баланс</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-nutrition" class="hidden min-h-screen p-5 pb-28 animate-fade-in relative">
+            <div class="mb-8 mt-4">
+                <h2 class="text-3xl mb-1">Питание</h2>
+                <p class="text-xs text-accent-teal uppercase tracking-widest font-bold">Суббота, 24 Января</p>
+            </div>
+
+            <div class="glass-card mb-8 p-3 flex justify-between items-center bg-black/40 border-none">
+                <div class="flex flex-col items-center gap-1 p-2 opacity-40 hover:opacity-100 transition">
+                    <span class="text-[10px]">ПТ</span><span class="text-lg font-bold">23</span>
+                </div>
+                <div class="flex flex-col items-center gap-1 p-2 bg-gradient-to-b from-blue-600 to-blue-800 rounded-xl shadow-lg shadow-blue-900/50 scale-110 border border-white/10 relative z-10">
+                    <span class="text-[10px] text-blue-200">СБ</span><span class="text-lg font-bold text-white">24</span>
+                    <div class="w-1 h-1 bg-white rounded-full mt-1"></div>
+                </div>
+                <div class="flex flex-col items-center gap-1 p-2 opacity-40 hover:opacity-100 transition">
+                    <span class="text-[10px]">ВС</span><span class="text-lg font-bold">25</span>
+                </div>
+                <div class="flex flex-col items-center gap-1 p-2 opacity-40 hover:opacity-100 transition">
+                    <span class="text-[10px]">ПН</span><span class="text-lg font-bold">26</span>
+                </div>
+                <div class="flex flex-col items-center gap-1 p-2 opacity-40 hover:opacity-100 transition">
+                    <span class="text-[10px]">ВТ</span><span class="text-lg font-bold">27</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-xl">Дневник</h3>
+                <div class="bg-white/5 px-4 py-1.5 rounded-full text-[10px] font-bold text-gray-300 border border-white/10 uppercase tracking-wider">
+                    Цель: 2 400 ккал
+                </div>
+            </div>
+
+            <div class="glass-card min-h-[300px] flex flex-col items-center justify-center text-center p-8 border-dashed border-2 border-white/10 bg-transparent">
+                <div class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6">
+                    <i data-lucide="utensils" class="w-8 h-8 text-gray-500"></i>
+                </div>
+                <h4 class="text-xl mb-2 text-gray-300">Пусто</h4>
+                <p class="text-xs text-gray-500 mb-8 uppercase tracking-wide">Данных за сегодня нет</p>
+                
+                <button class="btn-secondary w-auto px-8">
+                    <i data-lucide="copy" class="w-4 h-4"></i>
+                    Дублировать вчерашнее
+                </button>
+            </div>
+
+            <div class="fixed bottom-28 left-0 right-0 flex justify-center z-20 pointer-events-none">
+                 <button class="btn-float pointer-events-auto hover:scale-105 transition-transform" onclick="alert('Добавление блюда...')">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                    Добавить прием
+                </button>
+            </div>
+        </section>
+
+        <section id="screen-devices" class="hidden min-h-screen p-5 pb-28 animate-fade-in">
+             <div class="flex items-center gap-4 mb-8 glass-header p-4 -mx-5 -mt-5">
+                <button onclick="navigateTo('screen-settings')" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="text-xl">Оборудование</h2>
+            </div>
+            
+            <p class="text-xs text-gray-400 mb-6 uppercase tracking-wider pl-1">Доступные для синхронизации</p>
+            
+            <div class="space-y-4">
+                <div class="glass-card flex items-center justify-between p-5">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-white/10 p-3 rounded-xl border border-white/10"><i data-lucide="activity" class="w-6 h-6 text-white"></i></div>
+                        <div>
+                            <h4 class="text-lg">Apple Health</h4>
+                            <p class="text-[10px] text-green-400 uppercase font-bold tracking-wider">Рекомендовано</p>
+                        </div>
+                    </div>
+                    <button onclick="simulateConnection(this)" class="px-5 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all">Подключить</button>
+                </div>
+
+                <div class="glass-card flex items-center justify-between p-5">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-blue-500/10 p-3 rounded-xl border border-blue-500/20"><i data-lucide="watch" class="w-6 h-6 text-blue-400"></i></div>
+                        <div>
+                            <h4 class="text-lg">Garmin</h4>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Connect IQ</p>
+                        </div>
+                    </div>
+                    <button onclick="simulateConnection(this)" class="px-5 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all">Подключить</button>
+                </div>
+                 <div class="glass-card flex items-center justify-between p-5">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-gray-500/10 p-3 rounded-xl border border-gray-500/20"><i data-lucide="circle" class="w-6 h-6 text-gray-400"></i></div>
+                        <div>
+                            <h4 class="text-lg">Oura Ring</h4>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Cloud Sync</p>
+                        </div>
+                    </div>
+                    <button onclick="simulateConnection(this)" class="px-5 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all">Подключить</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-category-view" class="hidden min-h-screen pb-28">
+             <div class="sticky top-0 z-20 glass-header p-5 flex items-center gap-4">
+                <button onclick="navigateTo('screen-analyses')" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="text-xl w-full truncate" id="category-title">...</h2>
+            </div>
+            <div class="p-5 space-y-4" id="category-tests-list">
+                </div>
+        </section>
+
+        <section id="screen-analysis-detail" class="hidden min-h-screen pb-28">
+            <div class="sticky top-0 z-20 glass-header p-5 flex items-center gap-4">
+                <button onclick="backToCategory()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="text-xl w-full truncate" id="detail-title">Детали</h2>
+            </div>
+            <div class="p-5">
+                <div id="detail-content" class="space-y-6 mb-8"></div>
+                
+                <div class="glass-card bg-gradient-to-br from-blue-900/20 to-purple-900/20 border-blue-500/30">
+                    <div class="flex items-center gap-3 mb-4">
+                         <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-[0_0_10px_#3b82f6]">
+                             <i data-lucide="sparkles" class="w-4 h-4 text-white"></i>
+                         </div>
+                         <div>
+                             <h4 class="text-lg font-bold">Gemini AI</h4>
+                             <p class="text-[10px] text-blue-300 uppercase tracking-wider">Умный анализ</p>
+                         </div>
+                    </div>
+                    <div id="analysis-chat-output" class="text-sm font-light text-gray-200 mb-4 max-h-48 overflow-y-auto space-y-3 p-3 bg-black/30 rounded-xl border border-white/5"></div>
+                    <div class="flex gap-3">
+                        <input type="text" id="analysis-chat-input" class="glass-input rounded-xl border border-white/10 text-sm py-3" placeholder="Задайте вопрос по анализу..." style="border-radius: 12px;">
+                        <button onclick="sendAnalysisQuestion()" class="w-12 bg-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-500 transition shadow-lg"><i data-lucide="send" class="w-5 h-5 text-white"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="screen-upcoming" class="hidden min-h-screen p-5 pb-28">
+            <div class="flex items-center gap-4 mb-8 glass-header p-4 -mx-5 -mt-5">
+                <button onclick="navigateTo('screen-analyses')" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="text-xl">Календарь</h2>
+            </div>
+            
+            <div class="glass-card overflow-hidden transition-all duration-300 border-l-4 border-l-yellow-500" id="upcoming-card">
+                <div onclick="toggleUpcoming()" class="flex justify-between items-center cursor-pointer">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                             <span class="text-xl font-bold text-white">03 ФЕВ</span>
+                             <span class="text-[10px] bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded uppercase font-bold tracking-wider">Ожидание</span>
+                        </div>
+                        <h3 class="text-2xl font-light text-gray-200">Липидограмма</h3>
+                    </div>
+                    <div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center">
+                        <i data-lucide="chevron-down" id="upcoming-arrow" class="w-4 h-4 transition-transform duration-300"></i>
+                    </div>
+                </div>
+
+                <div id="upcoming-details" class="hidden mt-6 pt-6 border-t border-white/10 space-y-5">
+                    <div>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-2">Локация</p>
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
+                            <i data-lucide="map-pin" class="text-blue-400 w-5 h-5"></i>
+                            <span class="text-sm font-medium">CityLab Алматы (Достык 45)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5">
+                        <span class="text-xs text-gray-400 uppercase tracking-wider">Время</span>
+                        <span class="text-2xl font-bold font-mono text-white">09:30</span>
+                    </div>
+
+                    <button onclick="alert('Напоминание установлено')" class="btn-secondary justify-center text-xs font-bold uppercase tracking-wider hover:bg-white/10">
+                        <i data-lucide="bell" class="w-4 h-4"></i> Установить напоминание
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-laboratories" class="hidden min-h-screen p-5 pb-28">
+            <div class="flex items-center gap-4 mb-8 glass-header p-4 -mx-5 -mt-5">
+                <button onclick="navigateTo('screen-analyses')" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="text-xl">Лаборатории</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="glass-card border-none bg-gradient-to-r from-gray-900 to-gray-800">
+                    <div class="flex justify-between items-start mb-4">
+                         <div>
+                            <h3 class="text-2xl font-bold text-white mb-1">CityLab</h3>
+                            <p class="text-xs text-gray-400 uppercase tracking-wider"><i data-lucide="map-pin" class="w-3 h-3 inline mr-1"></i> пр. Достык, 45</p>
+                         </div>
+                         <div class="px-2 py-1 bg-green-500/20 text-green-400 text-[10px] font-bold uppercase rounded tracking-wider">Открыто</div>
+                    </div>
+                    <button onclick="bookLab()" class="w-full py-3 bg-white/5 border border-white/10 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition">Записаться онлайн</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-workout-detail" class="hidden min-h-screen p-5 pb-28">
+             <div class="flex items-center gap-4 mb-8 glass-header p-4 -mx-5 -mt-5">
+                <button onclick="navigateTo('screen-workouts')" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="text-xl" id="wo-detail-title">...</h2>
+            </div>
+            <div id="wo-detail-content" class="space-y-4"></div>
+        </section>
+        
+        <section id="screen-voice-analysis" class="hidden min-h-screen flex flex-col relative overflow-y-auto pb-28">
+            <div class="p-5 glass-header flex items-center gap-4 z-10 sticky top-0">
+                <button onclick="navigateTo('screen-analyses')" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="text-xl">AI Разбор</h2>
+            </div>
+            
+            <div class="flex-1 flex flex-col items-center p-6 space-y-8 w-full mt-4">
+                <div class="relative w-32 h-32 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-teal-500/20 rounded-full animate-ping"></div>
+                    <div class="relative z-10 w-24 h-24 bg-gradient-to-tr from-teal-500 to-blue-600 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(45,212,191,0.4)]">
+                        <i data-lucide="mic" class="w-10 h-10 text-white"></i>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                     <h3 class="text-2xl font-bold mb-2">Голосовой Ассистент</h3>
+                     <p class="text-sm text-gray-400 max-w-xs mx-auto font-light">Нажмите на виджет ниже, чтобы начать диалог о ваших анализах.</p>
+                </div>
+
+                <div class="w-full glass-card border border-white/10 bg-black/40 min-h-[200px]">
+                      <elevenlabs-convai agent-id="agent_8001kfgg5keje9qtyfrkd4853y1c"></elevenlabs-convai>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+    <script>
+        // --- CORE LOGIC PRESERVED --- 
+        lucide.createIcons();
+        const GEMINI_API_KEY = "AIzaSyCAgSeyibayMNQiWHLXm1aA1a_rcIOYSkQ";
+        let currentAnalysisContext = "";
+
+        // THEME LOGIC
+        function applyTheme(themeName) {
+            document.body.removeAttribute('data-theme');
+            document.querySelectorAll('.theme-card').forEach(el => {
+                el.classList.remove('active-theme', 'border-blue-500');
+                el.querySelector('.check-icon').classList.add('hidden');
+            });
+
+            const activeCard = document.getElementById('theme-' + themeName);
+            if(activeCard) {
+                activeCard.classList.add('active-theme', 'border-blue-500');
+                activeCard.querySelector('.check-icon').classList.remove('hidden');
+            }
+
+            if (themeName === 'white') document.body.setAttribute('data-theme', 'white');
+            else if (themeName === 'onyx') document.body.setAttribute('data-theme', 'onyx');
+            
+            lucide.createIcons();
+        }
+
+        // NAVIGATION
+        function switchTab(screenId, btnElement) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            navigateTo(screenId);
+        }
+
+        function navigateTo(screenId) {
+            document.querySelectorAll('section[id^="screen-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+            window.scrollTo(0,0);
+            
+            if(screenId === 'screen-health') startHeart();
+            else stopHeart();
+
+            if(screenId === 'screen-analyses') renderCategories(); 
+        }
+
+        function handleLogin() { 
+            document.getElementById('bottom-nav').classList.remove('hidden');
+            document.getElementById('default-tab-btn').click();
+        }
+
+        function simulateConnection(btn) {
+            if(btn.disabled) return;
+            btn.disabled = true;
+            let originalText = btn.innerText;
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 inline"></i>';
+            lucide.createIcons();
+
+            setTimeout(() => {
+                btn.className = "px-5 py-2 bg-green-500 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1";
+                btn.innerHTML = '<i data-lucide="check" class="w-4 h-4 inline"></i> OK';
+                lucide.createIcons();
+            }, 2000);
+        }
+
+        // HEARTBEAT
+        let heartInt;
+        function startHeart() {
+            const el = document.getElementById('health-bpm');
+            if (heartInt) clearInterval(heartInt);
+            heartInt = setInterval(() => {
+                const val = Math.floor(Math.random() * (65 - 55 + 1) + 55);
+                if(el) el.innerText = val;
+            }, 2000);
+        }
+        function stopHeart() { clearInterval(heartInt); }
+
+        // UPCOMING LOGIC
+        function toggleUpcoming() {
+            const details = document.getElementById('upcoming-details');
+            const arrow = document.getElementById('upcoming-arrow');
+            
+            if (details.classList.contains('hidden')) {
+                details.classList.remove('hidden');
+                details.classList.add('animate-fade-in');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                details.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // GEMINI
+        async function sendGemini(inputId, outputId, systemContext) {
+            const input = document.getElementById(inputId);
+            const output = document.getElementById(outputId);
+            const text = input.value;
+            if(!text) return;
+
+            const userDiv = document.createElement('div');
+            userDiv.className = "bg-blue-600/20 p-3 rounded-xl rounded-tr-none self-end text-right ml-auto max-w-[85%] mb-2 text-sm border border-blue-500/20 text-white";
+            userDiv.innerText = text;
+            output.appendChild(userDiv);
+            input.value = '';
+            output.scrollTop = output.scrollHeight;
+
+            const loadDiv = document.createElement('div');
+            loadDiv.className = "text-accent-teal text-xs italic animate-pulse mb-2";
+            loadDiv.innerText = "Анализ данных...";
+            output.appendChild(loadDiv);
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: `System: ${systemContext}. User Question: ${text}` }]
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                output.removeChild(loadDiv);
+                
+                let reply = "Извините, сервис временно недоступен.";
+                if(data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    reply = data.candidates[0].content.parts[0].text;
+                }
+                
+                const botDiv = document.createElement('div');
+                botDiv.className = "bg-white/5 p-3 rounded-xl rounded-tl-none self-start max-w-[90%] mb-2 text-sm border border-white/10";
+                reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong class="text-accent-teal">$1</strong>');
+                botDiv.innerHTML = `<strong class="text-blue-400 block text-[10px] uppercase mb-1 tracking-wider">Health AI</strong>${reply}`;
+                output.appendChild(botDiv);
+                output.scrollTop = output.scrollHeight;
+
+            } catch(e) {
+                console.error(e);
+                output.removeChild(loadDiv);
+                const errDiv = document.createElement('div');
+                errDiv.className = "text-red-400 text-xs mb-2";
+                errDiv.innerText = "Ошибка соединения";
+                output.appendChild(errDiv);
+            }
+        }
+
+        // --- NEW CATEGORY DATA LOGIC ---
+        const categoryList = [
+            { id: 'heart', name: 'Сердце', icon: 'heart', color: 'red', stats: { green: 3, red: 1, gray: 2 } },
+            { id: 'stress', name: 'Стресс и старение', icon: 'brain-circuit', color: 'purple', stats: { green: 0, red: 2, gray: 0 } },
+            { id: 'gender', name: 'Муж/Жен здоровье', icon: 'users', color: 'blue', stats: { green: 1, red: 2, gray: 7 } },
+            { id: 'immunity', name: 'Иммунитет', icon: 'shield', color: 'orange', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'meta', name: 'Метаболизм', icon: 'zap', color: 'yellow', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'toxins', name: 'Токсины окр. среды', icon: 'biohazard', color: 'green', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'age', name: 'Биологич. возраст', icon: 'hourglass', color: 'teal', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'vitamins', name: 'Витамины', icon: 'pill', color: 'pink', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'liver', name: 'Печень', icon: 'activity', color: 'indigo', stats: { green: 0, red: 0, gray: 0 } }, 
+            { id: 'blood', name: 'Кровь', icon: 'droplet', color: 'red', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'kidney', name: 'Почки', icon: 'activity', color: 'orange', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'pancreas', name: 'Поджелудочная', icon: 'activity', color: 'yellow', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'brain', name: 'Мозг', icon: 'brain', color: 'pink', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'elctro', name: 'Электролиты', icon: 'zap', color: 'blue', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'allergy', name: 'Аллергия', icon: 'flower', color: 'green', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'sex', name: 'Сексуальное здоровье', icon: 'heart-handshake', color: 'purple', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'bones', name: 'Здоровье костей', icon: 'bone', color: 'stone', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'infect', name: 'Инфекции', icon: 'bug', color: 'lime', stats: { green: 0, red: 0, gray: 0 } },
+            { id: 'mri', name: 'МРТ и КТ', icon: 'scan-line', color: 'sky', stats: { green: 0, red: 0, gray: 0 } }
+        ];
+
+        const categoryTestsData = {
+            'heart': [
+                { id: 'apo_b', name: "Аполипопротеин В", val: "84 ммоль/л", ref: "< 1.0", status: "norm" }, 
+                { id: 'hdl', name: "Холестерол-ЛПВП", val: "50 ммоль/л", ref: "> 1.0", status: "warn" },
+                { id: 'crp', name: "Высокочувствительный С-реактивный белок (кардио)", val: "89 ммоль/л", ref: "< 1.0", status: "norm", desc: "Маркер воспаления сосудов" },
+                { id: 'ldl', name: "Холестерин липопротеидов низкой плотности, прямой метод", val: "111 ммоль/л", ref: "< 3.0", status: "norm" },
+                { id: 'lpa', name: "Липопротеин (a)", val: "...", ref: "< 0.3", status: "pending" },
+                { id: 'chol_tot', name: "Холестерол общий", val: "...", ref: "< 5.2", status: "pending" }
+            ],
+            'stress': [
+                 { id: 'cortisol', name: "Кортизол", val: "230 ммоль/л", ref: "100-200", status: "warn" },
+                 { id: 'dhea', name: "ДЭА-S04 (DHEA-S)", val: "30 ммоль/л", ref: "> 50", status: "warn" }
+            ],
+            'gender': [
+                { id: 'free_testo', name: "Тестостерон свободный", val: "85 ммоль/л", ref: "> 50", status: "norm" },
+                { id: 'total_testo', name: "Тестостерон (Testosterone)", val: "10 ммоль/л", ref: "> 12", status: "warn" },
+                { id: 'shbg', name: "ГСПГ (SHBG)", val: "10 ммоль/л", ref: "> 13", status: "warn" },
+                { id: 'psa_total', name: "PSA общий (Prostate Specific Antigen)", val: "...", ref: "", status: "pending" },
+                { id: 'psa_free', name: "ПСА свободный (f-PSA)", val: "...", ref: "", status: "pending" },
+                { id: 'prolactin', name: "Пролактин (Prolactin, PRL)", val: "...", ref: "", status: "pending" },
+                { id: 'lh', name: "Лютеинизирующий гормон (ЛГ, LH)", val: "...", ref: "", status: "pending" },
+                { id: 'fsh', name: "Фолликулостимулирующий гормон (ФСГ)", val: "...", ref: "", status: "pending" },
+                { id: 'estradiol', name: "Эстрадиол (E2, Estradiol)", val: "...", ref: "", status: "pending" },
+                { id: 'dhea_s_gender', name: "ДЭА-S04 (DHEA-S)", val: "...", ref: "", status: "pending" }
+            ]
+        };
+
+        function renderCategories() {
+            const grid = document.getElementById('categories-grid');
+            grid.innerHTML = '';
+            
+            categoryList.forEach(cat => {
+                const el = document.createElement('div');
+                el.className = 'glass-card p-5 flex items-center justify-between cursor-pointer hover:bg-white/5 active:scale-95 transition group border-l-4';
+                
+                let borderColorClass = "border-l-gray-500";
+                let iconColorClass = "text-gray-400";
+                let iconBgClass = "bg-gray-500/10";
+                
+                if(cat.color === 'red') { borderColorClass = "border-l-red-500"; iconColorClass = "text-red-400"; iconBgClass = "bg-red-500/10"; }
+                else if(cat.color === 'purple') { borderColorClass = "border-l-purple-500"; iconColorClass = "text-purple-400"; iconBgClass = "bg-purple-500/10"; }
+                else if(cat.color === 'blue') { borderColorClass = "border-l-blue-500"; iconColorClass = "text-blue-400"; iconBgClass = "bg-blue-500/10"; }
+                else if(cat.color === 'orange') { borderColorClass = "border-l-orange-500"; iconColorClass = "text-orange-400"; iconBgClass = "bg-orange-500/10"; }
+                else if(cat.color === 'green') { borderColorClass = "border-l-green-500"; iconColorClass = "text-green-400"; iconBgClass = "bg-green-500/10"; }
+                else if(cat.color === 'teal') { borderColorClass = "border-l-teal-500"; iconColorClass = "text-teal-400"; iconBgClass = "bg-teal-500/10"; }
+                else if(cat.color === 'yellow') { borderColorClass = "border-l-yellow-500"; iconColorClass = "text-yellow-400"; iconBgClass = "bg-yellow-500/10"; }
+                else if(cat.color === 'pink') { borderColorClass = "border-l-pink-500"; iconColorClass = "text-pink-400"; iconBgClass = "bg-pink-500/10"; }
+                else if(cat.color === 'indigo') { borderColorClass = "border-l-indigo-500"; iconColorClass = "text-indigo-400"; iconBgClass = "bg-indigo-500/10"; }
+                else if(cat.color === 'lime') { borderColorClass = "border-l-lime-500"; iconColorClass = "text-lime-400"; iconBgClass = "bg-lime-500/10"; }
+                else if(cat.color === 'sky') { borderColorClass = "border-l-sky-500"; iconColorClass = "text-sky-400"; iconBgClass = "bg-sky-500/10"; }
+
+
+                el.classList.add(borderColorClass);
+                el.onclick = () => openCategory(cat.id, cat.name);
+
+                let statsHtml = '';
+                // Red Status Badge
+                if(cat.stats.red > 0) {
+                    statsHtml += `
+                        <div class="flex items-center gap-1.5 bg-red-500/10 px-2 py-1 rounded-md border border-red-500/10">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_5px_#ef4444] animate-pulse"></span>
+                            <span class="text-[10px] text-red-300 font-bold font-mono">${cat.stats.red}</span>
+                        </div>
+                    `;
+                }
+                // Green Status Badge
+                if(cat.stats.green > 0) {
+                     statsHtml += `
+                        <div class="flex items-center gap-1.5 bg-green-500/10 px-2 py-1 rounded-md border border-green-500/10">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                            <span class="text-[10px] text-green-300 font-bold font-mono">${cat.stats.green}</span>
+                        </div>
+                    `;
+                }
+                // Gray Status Badge
+                if(cat.stats.gray > 0) {
+                     statsHtml += `
+                        <div class="flex items-center gap-1.5 bg-gray-500/10 px-2 py-1 rounded-md border border-gray-500/10">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                            <span class="text-[10px] text-gray-300 font-bold font-mono">${cat.stats.gray}</span>
+                        </div>
+                    `;
+                }
+
+                el.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl ${iconBgClass} flex items-center justify-center border border-white/5 group-hover:scale-110 transition">
+                            <i data-lucide="${cat.icon}" class="w-6 h-6 ${iconColorClass}"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium leading-none mb-1">${cat.name}</h3>
+                            <div class="flex items-center gap-2 mt-2">
+                                ${statsHtml}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition">
+                         <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                    </div>
+                `;
+                grid.appendChild(el);
+            });
+            lucide.createIcons();
+        }
+
+        function openCategory(id, name) {
+            document.getElementById('screen-analyses').classList.add('hidden');
+            document.getElementById('screen-category-view').classList.remove('hidden');
+            document.getElementById('category-title').innerText = name;
+            window.scrollTo(0,0);
+            
+            const listContainer = document.getElementById('category-tests-list');
+            listContainer.innerHTML = '';
+
+            const tests = categoryTestsData[id] || [];
+            if(tests.length === 0) {
+                 listContainer.innerHTML = '<div class="text-center text-gray-500 mt-10">Анализ в процессе</div>';
+                 return;
+            }
+
+            tests.forEach(t => {
+                const item = document.createElement('div');
+                let textColor = "text-white";
+                let barColor = "bg-gray-600";
+                let shadowColor = "transparent";
+                
+                if (t.status === 'warn') {
+                    textColor = "text-red-400";
+                    barColor = "bg-gradient-to-r from-red-600 to-red-400";
+                    shadowColor = "rgba(239, 68, 68, 0.4)";
+                } else if (t.status === 'norm') {
+                    textColor = "text-green-400";
+                    barColor = "bg-gradient-to-r from-green-600 to-accent-teal";
+                    shadowColor = "rgba(45, 212, 191, 0.4)";
+                } else {
+                    textColor = "text-gray-400";
+                    barColor = "bg-gray-600";
+                }
+                
+                let progress = 50; // Default
+                if (t.status === 'warn') progress = 90;
+                if (t.status === 'norm') progress = 50;
+                if (t.status === 'pending') progress = 0;
+
+                item.className = 'glass-card p-4 flex items-center justify-between cursor-pointer hover:bg-white/5 active:scale-95 transition';
+                item.onclick = () => showTestDetail(t);
+                
+                item.innerHTML = `
+                    <div class="flex-1 pr-4">
+                        <div class="flex justify-between items-end mb-2">
+                             <h4 class="text-lg font-medium ${t.status === 'pending' ? 'text-gray-500' : 'text-white'}">${t.name}</h4>
+                             <div class="text-right">
+                                 <span class="text-lg font-bold ${textColor}">${t.val}</span>
+                             </div>
+                        </div>
+                        
+                        <div class="h-1.5 w-full bg-gray-700/30 rounded-full overflow-hidden relative">
+                             <div class="absolute top-0 left-0 h-full ${barColor} rounded-full" style="width: ${progress}%; box-shadow: 0 0 10px ${shadowColor};"></div>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-600"></i>
+                `;
+                listContainer.appendChild(item);
+            });
+            lucide.createIcons();
+        }
+
+        // --- REUSABLE GRAPH COMPONENT ---
+        const getGraphHTML = (title, valueStr, desc, diseases, prevVal, currVal, boundaries = null, dates = null) => `
+            <div class="glass-card p-6 relative overflow-hidden">
+                <div class="flex flex-col gap-6">
+                    <div class="z-10 relative">
+                        <h2 class="text-3xl font-serif-display text-white mb-2">${title}</h2>
+                        <div class="text-xl font-bold text-white mb-4">В норме ${valueStr}</div>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-4">${desc}</p>
+                        <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                            <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p>
+                            <ul class="text-xs text-gray-300 space-y-1">
+                                ${diseases.map(d => `<li>• ${d}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2">
+                        <div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4">
+                                     <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div>
+                                     <div class="flex items-center gap-2"><div class="h-6 w-1 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]"></div> В НОРМЕ</div>
+                                     <div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> НИЖЕ НОРМЫ</div>
+                        </div>
+                        <div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                        <div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div>
+                        
+                        ${boundaries ? `
+                            <div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">${boundaries[0]}*</div>
+                            <div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">${boundaries[1]}*</div>
+                        ` : ''}
+
+                        <div class="absolute top-[${title.includes('ЛПВП') ? '10%' : '20%'}] right-[35%] flex flex-col items-center z-10">
+                                     <span class="text-xs font-bold text-gray-300 mb-1">${prevVal}</span>
+                                     <div class="w-3 h-3 rounded-full border-2 border-orange-400 bg-[#1e1b4b]"></div>
+                                     ${dates ? `<span class="text-[9px] text-white/40 mt-1 font-mono">${dates[0]}</span>` : ''}
+                        </div>
+                        
+                        <div class="absolute top-[50%] right-[10%] flex flex-col items-center z-10">
+                                     <span class="text-xs font-bold text-green-400 mb-1">${currVal}</span>
+                                     <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]"></div>
+                                     ${dates ? `<span class="text-[9px] text-white/40 mt-1 font-mono">${dates[1]}</span>` : ''}
+                        </div>
+                        
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                            <line x1="65%" y1="${title.includes('ЛПВП') ? '15%' : '25%'}" x2="90%" y2="55%" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                        </svg>
+                   </div>
+                   <div class="text-[9px] text-gray-500 mt-2 pt-2 border-t border-white/5">
+                       * границы норма в соответствии с данными Министерства здравоохранения РК
+                   </div>
+               </div>
+            </div>
+        `;
+
+        function showTestDetail(testData) {
+            document.getElementById('screen-category-view').classList.add('hidden');
+            document.getElementById('screen-analysis-detail').classList.remove('hidden');
+            window.scrollTo(0,0);
+            document.getElementById('detail-title').innerText = testData.name;
+            currentAnalysisContext = `Анализ пользователя: ${testData.name}. Значение: ${testData.val}. Референс: ${testData.ref}. Статус: ${testData.status}. Описание: ${testData.desc || 'Нет описания'}.`;
+            
+            const content = document.getElementById('detail-content');
+            
+            if (testData.id === 'apo_b') {
+                content.innerHTML = getGraphHTML('Аполипопротеин В (ApoB)', '84 ммоль/л', 'Позволяет напрямую подсчитать количество холестериновых частиц...', ['Сердечно сосудистые заболевания', 'Атеросклероз'], '93', '84') + `<div class="flex flex-col items-center -mt-6 relative z-0"><div class="h-8 w-px bg-white/20"></div></div><div class="glass-card flex items-center gap-4 p-4 border border-orange-400/30"><div class="p-3 bg-orange-500/20 rounded-xl text-orange-400"><i data-lucide="fish" class="w-6 h-6"></i></div><div><h4 class="font-bold text-sm">Омега-3 жирные кислоты</h4><p class="text-xs text-gray-400">Лосось 2 раза в неделю</p></div></div>`;
+            } else if (testData.id === 'hdl') {
+                content.innerHTML = getGraphHTML('Холестерол-ЛПВП', '50 ммоль/л','Показатель полезного холестерина...', ['Сердечно сосудистые заболевания', 'Атеросклероз'], '52', '50', ['60', '45'], ['06.06.2025', '06.12.2025']);
+            } else if (testData.id === 'crp') {
+                content.innerHTML = getGraphHTML('Высокочувств. CRP', '89 ммоль/л', 'Может выявлять даже небольшое количество воспаления...', ['Хроническое давление', 'Сердечно сосудистые заболевания'], '88', '89');
+            } else if (testData.id === 'ldl') {
+                content.innerHTML = getGraphHTML('Холестерин ЛПНП', '111 ммоль/л', 'Отвечает за перенос холестерина из печени...', ['Сердечно сосудистые заболевания', 'Атеросклероз'], '120', '111');
+            } else if (testData.id === 'cortisol') {
+                 content.innerHTML = `<div class="glass-card p-6 relative overflow-hidden"><div class="flex flex-col gap-6"><div class="z-10 relative"><h2 class="text-3xl font-serif-display text-white mb-2">Кортизол</h2><div class="text-xl font-bold text-red-400 mb-4">Выше нормы 230 ммоль/л</div><p class="text-xs text-gray-300 leading-relaxed mb-4">Часто называют «гормоном стресса»...</p><div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20"><p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p><ul class="text-xs text-gray-300 space-y-1"><li>• Надпочечниковая недостаточность</li><li>• Синдром Кушинга</li></ul></div></div><div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2"><div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4"><div class="flex items-center gap-2"><div class="h-6 w-1 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"></div> ВЫШЕ НОРМЫ</div><div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> В НОРМЕ</div><div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> НИЖЕ НОРМЫ</div></div><div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div><div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div><div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">200*</div><div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">100*</div><div class="absolute top-[50%] right-[35%] flex flex-col items-center z-10"><span class="text-xs font-bold text-gray-300 mb-1">180</span><div class="w-3 h-3 rounded-full border-2 border-gray-400 bg-[#1e1b4b]"></div><span class="text-[9px] text-white/40 mt-1 font-mono">20.12.2025</span></div><div class="absolute top-[15%] right-[10%] flex flex-col items-center z-10"><span class="text-xs font-bold text-red-400 mb-1">230</span><div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse"></div><span class="text-[9px] text-white/40 mt-1 font-mono">20.01.2026</span></div><svg class="absolute inset-0 w-full h-full pointer-events-none"><line x1="65%" y1="50%" x2="90%" y2="15%" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-dasharray="4" /></svg></div></div></div>`;
+            } else if (testData.id === 'dhea') {
+                 content.innerHTML = `<div class="glass-card p-6 relative overflow-hidden"><div class="flex flex-col gap-6"><div class="z-10 relative"><h2 class="text-3xl font-serif-display text-white mb-2">ДЭА-S04</h2><div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 30 ммоль/л</div><p class="text-xs text-gray-300 leading-relaxed mb-4">У женщин ДГЭА-С служит строительным блоком...</p><div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20"><p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p><ul class="text-xs text-gray-300 space-y-1"><li>• Усталость</li><li>• Гормональный дисбаланс</li></ul></div></div><div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2"><div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4"><div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div><div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> В НОРМЕ</div><div class="flex items-center gap-2"><div class="h-6 w-1 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"></div> НИЖЕ НОРМЫ</div></div><div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div><div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div><div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">100*</div><div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">50*</div><div class="absolute top-[50%] right-[35%] flex flex-col items-center z-10"><span class="text-xs font-bold text-gray-300 mb-1">60</span><div class="w-3 h-3 rounded-full border-2 border-gray-400 bg-[#1e1b4b]"></div><span class="text-[9px] text-white/40 mt-1 font-mono">20.12.2025</span></div><div class="absolute top-[85%] right-[10%] flex flex-col items-center z-10"><span class="text-xs font-bold text-red-400 mb-1">30</span><div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse"></div><span class="text-[9px] text-white/40 mt-1 font-mono">20.01.2026</span></div><svg class="absolute inset-0 w-full h-full pointer-events-none"><line x1="65%" y1="50%" x2="90%" y2="85%" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-dasharray="4" /></svg></div></div></div>`;
+            } else if (testData.id === 'free_testo') {
+                content.innerHTML = getGraphHTML('Тестостерон свободный', '85 ммоль/л', 'Это биологически активная форма тестостерона...', ['Гипогонадизм', 'Метаболическая дисфункция'], '80', '85', ['100', '50']);
+            } else if (testData.id === 'total_testo') {
+                 content.innerHTML = `<div class="glass-card p-6 relative overflow-hidden"><div class="flex flex-col gap-6"><div class="z-10 relative"><h2 class="text-3xl font-serif-display text-white mb-2">Тестостерон</h2><div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 10 ммоль/л</div><p class="text-xs text-gray-300 leading-relaxed mb-4">Измеряет количество всего циркулирующего в крови тестостерона...</p><div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20"><p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p><ul class="text-xs text-gray-300 space-y-1"><li>• Гипогонадизм</li><li>• Ожирение</li></ul></div></div><div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2"><div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4"><div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div><div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> В НОРМЕ</div><div class="flex items-center gap-2"><div class="h-6 w-1 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"></div> НИЖЕ НОРМЫ</div></div><div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div><div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div><div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">35*</div><div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">12*</div><div class="absolute top-[50%] right-[35%] flex flex-col items-center z-10"><span class="text-xs font-bold text-gray-300 mb-1">15</span><div class="w-3 h-3 rounded-full border-2 border-gray-400 bg-[#1e1b4b]"></div><span class="text-[9px] text-white/40 mt-1 font-mono">20.12.2025</span></div><div class="absolute top-[80%] right-[10%] flex flex-col items-center z-10"><span class="text-xs font-bold text-red-400 mb-1">10</span><div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse"></div><span class="text-[9px] text-white/40 mt-1 font-mono">20.01.2026</span></div><svg class="absolute inset-0 w-full h-full pointer-events-none"><line x1="65%" y1="50%" x2="90%" y2="80%" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-dasharray="4" /></svg></div></div></div>`;
+            } else if (testData.id === 'shbg') {
+                 content.innerHTML = `<div class="glass-card p-6 relative overflow-hidden"><div class="flex flex-col gap-6"><div class="z-10 relative"><h2 class="text-3xl font-serif-display text-white mb-2">ГСПГ (SHBG)</h2><div class="text-xl font-bold text-red-400 mb-4">Ниже нормы 10 ммоль/л</div><p class="text-xs text-gray-300 leading-relaxed mb-4">это белок, который связывается с тестостероном...</p><div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-500/20"><p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Возможные заболевания:</p><ul class="text-xs text-gray-300 space-y-1"><li>• Гипогонадизм</li><li>• Инсулинорезистентность</li></ul></div></div><div class="w-full h-48 relative border-l border-white/10 pl-4 mt-2"><div class="absolute inset-0 flex flex-col justify-between text-[9px] text-gray-500 font-bold tracking-wider py-4"><div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> ВЫШЕ НОРМЫ</div><div class="flex items-center gap-2"><div class="h-6 w-1 bg-gray-600 rounded-full"></div> В НОРМЕ</div><div class="flex items-center gap-2"><div class="h-6 w-1 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"></div> НИЖЕ НОРМЫ</div></div><div class="absolute top-1/3 left-0 w-full border-t border-dashed border-white/10"></div><div class="absolute top-2/3 left-0 w-full border-t border-dashed border-white/10"></div><div class="absolute top-[31%] right-0 text-[10px] text-gray-400 font-mono">71*</div><div class="absolute top-[64%] right-0 text-[10px] text-gray-400 font-mono">13*</div><div class="absolute top-[50%] right-[35%] flex flex-col items-center z-10"><span class="text-xs font-bold text-gray-300 mb-1">18</span><div class="w-3 h-3 rounded-full border-2 border-gray-400 bg-[#1e1b4b]"></div><span class="text-[9px] text-white/40 mt-1 font-mono">20.12.2025</span></div><div class="absolute top-[80%] right-[10%] flex flex-col items-center z-10"><span class="text-xs font-bold text-red-400 mb-1">10</span><div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse"></div><span class="text-[9px] text-white/40 mt-1 font-mono">20.01.2026</span></div><svg class="absolute inset-0 w-full h-full pointer-events-none"><line x1="65%" y1="50%" x2="90%" y2="80%" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-dasharray="4" /></svg></div></div></div>`;
+            } else if (testData.status === 'pending' || testData.id === 'lpa' || testData.id === 'chol_tot') {
+                content.innerHTML = `
+                    <div class="glass-card p-8 flex flex-col items-center justify-center text-center min-h-[300px] border border-blue-500/30 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-blue-500/5 animate-pulse-glow"></div>
+                        <div class="w-24 h-24 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 animate-spin-slow border border-blue-400/30">
+                            <i data-lucide="loader-2" class="w-10 h-10 text-blue-400"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white mb-2">Анализ в процессе</h2>
+                        <p class="text-sm text-gray-400 max-w-[200px]">Ваши образцы находятся в лаборатории. Мы уведомим вас, когда результаты будут готовы.</p>
+                        <div class="mt-6 px-4 py-2 bg-white/5 rounded-full text-xs font-mono text-blue-300">
+                            Ожидаемое время: 24ч
+                        </div>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        function backToCategory() {
+            document.getElementById('screen-analysis-detail').classList.add('hidden');
+            document.getElementById('screen-category-view').classList.remove('hidden');
+            currentAnalysisContext = "";
+        }
+        
+        function sendAnalysisQuestion() {
+            if(!currentAnalysisContext) return;
+            sendGemini('analysis-chat-input', 'analysis-chat-output', currentAnalysisContext);
+        }
+
+        // WORKOUTS
+        function showWorkoutDetail(type) {
+             navigateTo('screen-workout-detail');
+             const title = document.getElementById('wo-detail-title');
+             const content = document.getElementById('wo-detail-content');
+             title.innerText = "Тренировка";
+             
+             // Content mock
+             content.innerHTML = `
+                <div class="glass-card p-6 border-l-4 border-l-teal-500">
+                    <h2 class="text-2xl font-bold mb-2">Утренний Тонус</h2>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-6">15 Минут • Легкая нагрузка</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
+                            <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-400 font-bold">1</div>
+                            <div>
+                                <h4 class="text-lg">Разминка шеи</h4>
+                                <p class="text-xs text-gray-500">2 минуты</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
+                            <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-400 font-bold">2</div>
+                            <div>
+                                <h4 class="text-lg">Прыжки на месте</h4>
+                                <p class="text-xs text-gray-500">3 подхода x 30 сек</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary mt-8">Начать тренировку</button>
+                </div>
+             `;
+        }
+
+        function bookLab() {
+            const toast = document.getElementById('toast');
+            toast.innerText = "Заявка отправлена успешно";
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</body>
+</html>
